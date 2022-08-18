@@ -1,17 +1,27 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import Video from '../components/Video/Video.component'
-import styles from '../styles/Home.module.css'
-import Audio from '../components/Audio/Audio.component'
+import UserMedia from '../components/UserMedia/UserMedia.component'
+import { wrapper } from '../store/store'
+import { setMediaState } from '../store/mediaSlice'
+
+export const getServerSideProps = wrapper.getServerSideProps(
+    (store) =>
+        async ({ params }) => {
+            await store.dispatch(setMediaState(false));
+            console.log("State on server", store.getState());
+            return {
+                props: {
+                    authState: false,
+                },
+            };
+        }
+);
 
 const Home: NextPage = () => {
-  return (
-    <div>
-      {/* <Video /> */}
-      <Audio />
-    </div>
-  )
+    return (
+        <div>
+            <UserMedia />
+        </div>
+    )
 }
 
-export default Home
+export default Home;
