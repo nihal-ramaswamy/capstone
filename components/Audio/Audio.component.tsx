@@ -3,8 +3,13 @@ import RecordingsList from "../RecordingsList/RecordingsList.component";
 import useRecorder from "../../hooks/useRecorder.hooks";
 import { UseRecorder } from "../../types/Audio.types";
 import classes from './Audio.module.css';
+import { Dispatch, SetStateAction } from "react";
 
-const Audio = () => {
+interface AudioProps {
+  setAudio: Dispatch<SetStateAction<string | null>>;
+}
+
+const Audio = (props: AudioProps) => {
   const { recorderState, ...handlers }: UseRecorder = useRecorder();
   const { audio } = recorderState;
 
