@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { selectMediaState, setMediaState } from "../../store/mediaSlice";
 import { useState } from "react";
-import Audio from "../Audio/Audio.component";
 import Video from "../Video/Video.component";
+import Audio from "../Audio/Audio.component";
 
 const UserMedia = () => {
     const mediaState = useSelector(selectMediaState);
@@ -12,11 +12,20 @@ const UserMedia = () => {
 
     // dispatch(setMediaState(!mediaState))
 
+    const [userVideo, setUserVideo] = useState<string | null>(null);
+    const [userAudio, setUserAudio] = useState<string | null>(null);
+
     return (
         <div>
-            <button onClick={() => dispatch(setMediaState(!mediaState))}>Record</button>
-            <Audio />
-            <Video />
+            <div>
+                <Video setImage = {setUserVideo} />
+            </div>
+            <div>
+                <Audio setAudio = {setUserAudio} />
+            </div>
+            <button onClick={() => dispatch(setMediaState(!mediaState))}>
+                Click Here
+            </button>
         </div>
     );
 }

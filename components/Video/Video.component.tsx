@@ -1,13 +1,31 @@
-import React, { useEffect, useRef } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectMediaState, setMediaState } from "../../store/mediaSlice";
 
-const Video = () => {
+interface VideoProps {
+  setImage: Dispatch<SetStateAction<string | null>>;
+};
+
+const Video = (props: VideoProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const photoRef = useRef<HTMLCanvasElement>(null);
   const stripRef = useRef<HTMLDivElement>(null);
+  const [image, setImage] = useState<string | null>(null);
+  const mediaState = useSelector(selectMediaState);
+
 
   useEffect(() => {
     getVideo();
   }, [videoRef]);
+
+
+  useEffect(() => {
+    if (mediaState) {
+      takePhoto();
+      props.setImage(image);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mediaState]);
 
   const getVideo = () => {
     navigator.mediaDevices
@@ -59,6 +77,7 @@ const Video = () => {
     }
 
     const data = photo.toDataURL("image/jpeg");
+    setImage(data);
 
     console.warn(data);
     const link = document.createElement("a");
@@ -70,7 +89,6 @@ const Video = () => {
 
   return (
     <div>
-      <button onClick={() => takePhoto()}>Take a photo</button>
       <video onCanPlay={() => paintToCanvas()} ref={videoRef} />
       <canvas ref={photoRef} />
       <div>
