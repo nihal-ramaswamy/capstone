@@ -27,6 +27,7 @@ export type RecorderControlsProps = {
 
 export type RecordingsListProps = {
     audio: string | null;
+    setAudio: Dispatch<SetStateAction<string | null>>;
 };
 
 export type Audio = {

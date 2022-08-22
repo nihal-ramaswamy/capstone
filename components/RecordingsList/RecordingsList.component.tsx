@@ -1,8 +1,8 @@
 import useRecordingsList from "../../hooks/useRecordingsList.hooks";
 import { RecordingsListProps } from "../../types/Audio.types";
 
-export default function RecordingsList({ audio }: RecordingsListProps) {
-  const { recordings, deleteAudio } = useRecordingsList(audio);
+export default function RecordingsList({ audio, setAudio }: RecordingsListProps) {
+  const { recordings, deleteAudio } = useRecordingsList(audio, setAudio);
 
   return (
     <div className="recordings-container">

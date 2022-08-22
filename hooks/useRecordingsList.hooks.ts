@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { deleteAudio } from "../handlers/recordingsList.handlers";
 import { Audio } from "../types/Audio.types";
 import generateKey from "../utils/generateKeys.utils";
 
-export default function useRecordingsList(audio: string | null) {
+export default function useRecording(audio: string | null, setAudio: Dispatch<SetStateAction<string | null>>) {
     const [recordings, setRecordings] = useState<Audio[]>([]);
 
     useEffect(() => {
@@ -11,6 +11,8 @@ export default function useRecordingsList(audio: string | null) {
             setRecordings((prevState: Audio[]) => {
                 return [...prevState, { key: generateKey(), audio }];
             });
+            setAudio(audio);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [audio]);
 
     return {

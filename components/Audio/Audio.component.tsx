@@ -18,7 +18,7 @@ const Audio = (props: AudioProps) => {
       <h1 className={classes.title}>Voice Recorder</h1>
       <div className={classes.recorderContainer}>
         <RecorderControls recorderState={recorderState} handlers={handlers} />
-        <RecordingsList audio={audio} />
+        <RecordingsList audio={audio} setAudio={props.setAudio} />
       </div>
     </section>
   );
