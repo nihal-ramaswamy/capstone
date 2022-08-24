@@ -22,7 +22,6 @@ const Video = (props: VideoProps) => {
   useEffect(() => {
     if (mediaState) {
       takePhoto();
-      props.setImage(image);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mediaState]);
@@ -77,6 +76,7 @@ const Video = (props: VideoProps) => {
     }
 
     const data = photo.toDataURL("image/jpeg");
+    props.setImage(data);
     setImage(data);
 
     console.warn(data);
