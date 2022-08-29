@@ -13,7 +13,7 @@ export const handler = (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const email = req.body.email;
   const id = req.body.userId;
   const logID = req.body.id;
-  const subProcess = spawn("python", ["../../python/test.py", "--userId", id, "--email", email, "--logID", logID]);
+  const subProcess = spawn("python", ["../../python/cheater.py", "--userID", id, "--email", email, "--logID", logID]);
 
   let responseFromPython = false;
   let error: string = "";
