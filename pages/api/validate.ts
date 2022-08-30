@@ -6,14 +6,15 @@ type Data = {
   error?: string;
 };
 
-export const handler = (req: NextApiRequest, res: NextApiResponse<Data>) => {
+const handler = (req: NextApiRequest, res: NextApiResponse<Data>) => {
   if (req.method !== "GET") {
+    res.status(500).send({ data: "Supports only get" });
     return;
   }
   const email = req.body.email;
   const id = req.body.userId;
   const logID = req.body.id;
-  const subProcess = spawn("python", [
+  const subProcess = spawn("python3", [
     "../../scripts/cheater.py",
     "--userID",
     id,
@@ -28,7 +29,7 @@ export const handler = (req: NextApiRequest, res: NextApiResponse<Data>) => {
   let responseStatus = 202;
 
   subProcess.stdout.on("data", (data: any) => {
-    console.log(data.toString());
+    console.log(data);
     responseFromPython = data.toString();
     responseStatus = 201;
   });
@@ -50,3 +51,5 @@ export const handler = (req: NextApiRequest, res: NextApiResponse<Data>) => {
     }
   });
 };
+
+export default handler;
