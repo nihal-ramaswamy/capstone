@@ -1,10 +1,16 @@
-import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectMediaState, setMediaState } from "../../store/mediaSlice";
 
 interface VideoProps {
   setImage: Dispatch<SetStateAction<string | null>>;
-};
+}
 
 const Video = (props: VideoProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -13,11 +19,9 @@ const Video = (props: VideoProps) => {
   const [image, setImage] = useState<string | null>(null);
   const mediaState = useSelector(selectMediaState);
 
-
   useEffect(() => {
     getVideo();
   }, [videoRef]);
-
 
   useEffect(() => {
     if (mediaState) {
@@ -29,15 +33,15 @@ const Video = (props: VideoProps) => {
   const getVideo = () => {
     navigator.mediaDevices
       .getUserMedia({ video: { width: 300 } })
-      .then(stream => {
+      .then((stream) => {
         let video = videoRef.current;
         if (!video) {
-            return;
+          return;
         }
         video.srcObject = stream;
         video.play();
       })
-      .catch(err => {
+      .catch((err) => {
         console.error("error:", err);
       });
   };
@@ -47,7 +51,7 @@ const Video = (props: VideoProps) => {
     let photo = photoRef.current;
 
     if (!photo || !video) {
-        return;
+      return;
     }
 
     let ctx = photo.getContext("2d");
@@ -58,10 +62,10 @@ const Video = (props: VideoProps) => {
     photo.height = height;
 
     return setInterval(() => {
-        if (!video || !ctx) {
-            return;
-        }
-        ctx.drawImage(video, 0, 0, width, height);
+      if (!video || !ctx) {
+        return;
+      }
+      ctx.drawImage(video, 0, 0, width, height);
     }, 200);
   };
 
@@ -69,17 +73,14 @@ const Video = (props: VideoProps) => {
     let photo = photoRef.current;
     let strip = stripRef.current;
 
-    console.warn(strip);
-
     if (!photo || !strip) {
-        return;
+      return;
     }
 
     const data = photo.toDataURL("image/jpeg");
     props.setImage(data);
     setImage(data);
 
-    console.warn(data);
     const link = document.createElement("a");
     link.href = data;
     link.setAttribute("download", "myWebcam");

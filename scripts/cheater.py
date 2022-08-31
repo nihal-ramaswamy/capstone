@@ -22,7 +22,7 @@ storage = firebase.database()
 
 def selectValuesFromUsersWhereUserID(userID: str) -> json:
     val = (storage.child("users").child(userID).get()).val()
-    return json.dumps(val)
+    return val
 
 
 if __name__ == "__main__":
