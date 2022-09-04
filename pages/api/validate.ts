@@ -12,6 +12,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     res.status(500).send({ data: "Supports only get" });
     return;
   }
+  console.log(req);
   const email = req.body.email;
   const id = req.body.userId;
   const logID = req.body.id;
@@ -31,7 +32,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
   subProcess.stdout.on("data", (data: any) => {
     console.log("HELLLOOOOO");
-    console.log(data.toString());
+    console.log(email, id, logID);
+    // console.log(data.toString());
     responseFromPython += data.toString();
     responseStatus = 201;
   });
