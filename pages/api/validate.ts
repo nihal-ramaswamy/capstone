@@ -13,9 +13,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     return;
   }
 
-  const email = req.body.email;
-  const id = req.body.userId;
-  const logID = req.body.id;
+  console.log(req);
+
+  const email = req.query.email;
+  const id = req.query.userId;
+  const logID = req.query.id;
 
   console.log(email, id, logID);
 

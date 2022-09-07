@@ -27,11 +27,13 @@ const UserMedia = () => {
       userVideo,
       userAudio
     );
+
+    console.log("Log id: ", logID);
     dispatch(setMediaState(!mediaState));
 
     axios
       .get("/api/validate", {
-        data: {
+        params: {
           email: "email",
           userId: "AAAA",
           id: logID,
