@@ -36,7 +36,6 @@ const UserMedia = () => {
       if (userAudio == null || userVideo == null) {
         return;
       }
-      alert("Saving to db");
       const logID = await writeUserData(
         "AAAA",
         "BBBB",
@@ -47,6 +46,7 @@ const UserMedia = () => {
 
       setUserAudio(null);
       setUserVideo(null);
+      console.log(logID);
 
       dispatch(setMediaState(false));
       dispatch(setTimerState(false));

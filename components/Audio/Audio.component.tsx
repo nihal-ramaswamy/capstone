@@ -85,6 +85,7 @@ const Audio = (props: AudioProps) => {
     // const mils = time.ms + ms + 1000;
     // setTime({h: h, m: min, s: sec, ms: mils});
     saveAudio();
+    handleReset();
   };
 
   const initRecording = async () => {
@@ -159,7 +160,6 @@ const Audio = (props: AudioProps) => {
   };
 
   const saveAudio = () => {
-    alert("Called!");
     const blob = new Blob(chunks, { type: audioType });
     const audioURL = window.URL.createObjectURL(blob);
     const audios = [audioURL];
