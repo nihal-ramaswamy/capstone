@@ -24,7 +24,9 @@ const UserMedia = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log("Timer State: ", timerState);
+    if (timerState) {
+      dispatch(setMediaState(true));
+    }
   }, [timerState]);
 
 
@@ -44,7 +46,7 @@ const UserMedia = () => {
     );
 
     console.log("Log id: ", logID);
-    dispatch(setMediaState(!mediaState));
+    dispatch(setMediaState(false));
 
     axios
       .get("/api/validate", {
@@ -61,9 +63,6 @@ const UserMedia = () => {
 
   return (
     <div>
-      <div>
-        {timerState ? "True": "False"}
-      </div>
       <div>
         <Video setImage={setUserVideo} />
       </div>

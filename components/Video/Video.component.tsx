@@ -26,6 +26,7 @@ const Video = (props: VideoProps) => {
   useEffect(() => {
     if (mediaState) {
       takePhoto();
+      console.log(photoRef);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mediaState]);
