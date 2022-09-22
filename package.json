@@ -14,6 +14,7 @@
     "@trpc/next": "^9.27.0",
     "@trpc/react": "^9.27.0",
     "@trpc/server": "^9.27.0",
+    "@types/webrtc": "^0.0.32",
     "axios": "^0.27.2",
     "child_process": "^1.0.2",
     "dotenv": "^16.0.1",

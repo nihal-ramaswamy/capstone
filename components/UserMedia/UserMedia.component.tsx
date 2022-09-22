@@ -21,34 +21,37 @@ const UserMedia = () => {
     return () => {
       clearInterval(intervalId.current);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   useEffect(() => {
     if (timerState) {
       dispatch(setMediaState(true));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timerState]);
 
-
-  const saveToDb = async () => {
-    if (userAudio == null || userVideo == null) {
-      alert(
-        `Video or Audio is null. ${userAudio == null} ${userVideo == null}`
+  useEffect(() => {
+    (async () => {
+      if (userAudio == null || userVideo == null) {
+        return;
+      }
+      alert("Saving to db");
+      const logID = await writeUserData(
+        "AAAA",
+        "BBBB",
+        "email",
+        userVideo,
+        userAudio
       );
-      return;
-    }
-    const logID = await writeUserData(
-      "AAAA",
-      "BBBB",
-      "email",
-      userVideo,
-      userAudio
-    );
 
-    console.log("Log id: ", logID);
-    dispatch(setMediaState(false));
+      setUserAudio(null);
+      setUserVideo(null);
 
-    axios
+      dispatch(setMediaState(false));
+      dispatch(setTimerState(false));
+
+      axios
       .get("/api/validate", {
         params: {
           email: "email",
@@ -59,18 +62,24 @@ const UserMedia = () => {
       .then((response) => {
         console.log(response.data);
       });
-  };
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userAudio, userVideo]);
 
   return (
     <div>
+      <div>
+        Timer: {timerState ? "True": "False"}
+      </div>
+      <div>
+        Media: {mediaState ? "True" : "False"}
+      </div>
       <div>
         <Video setImage={setUserVideo} />
       </div>
       <div>
         <Audio setAudio={setUserAudio} />
       </div>
-      <button onClick={() => dispatch(setMediaState(true))}>Click Here</button>
-      <button onClick={() => saveToDb()}>Save to DB</button>
     </div>
   );
 };
