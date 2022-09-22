@@ -13,7 +13,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     return;
   }
 
-  console.log(req);
+  // console.log(req);
 
   const email = req.query.email;
   const id = req.query.userId;

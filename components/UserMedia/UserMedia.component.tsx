@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { selectMediaState, setMediaState } from "../../store/mediaSlice";
-import { useEffect, useState } from "react";
+import timer, { SelectTimerState, setTimerState } from "../../store/timer";
+import { useEffect, useRef, useState } from "react";
 import Video from "../Video/Video.component";
 import Audio from "../Audio/Audio.component";
 import { writeUserData } from "../../db/db";
@@ -8,10 +9,24 @@ import axios from "axios";
 
 const UserMedia = () => {
   const mediaState = useSelector(selectMediaState);
+  const timerState = useSelector(SelectTimerState);
   const dispatch = useDispatch();
 
   const [userVideo, setUserVideo] = useState<string | null>(null);
   const [userAudio, setUserAudio] = useState<string | null>(null);
+  const intervalId = useRef<NodeJS.Timer>();
+
+  useEffect(() => {
+    intervalId.current = setInterval(() => dispatch(setTimerState(!timerState)), 5000);
+    return () => {
+      clearInterval(intervalId.current);
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    console.log("Timer State: ", timerState);
+  }, [timerState]);
+
 
   const saveToDb = async () => {
     if (userAudio == null || userVideo == null) {
@@ -35,8 +50,8 @@ const UserMedia = () => {
       .get("/api/validate", {
         params: {
           email: "email",
-          userId: "AAAA",
-          id: logID,
+          userId: "BBBB", // TODO: replace this with actual email and user id
+          id: logID, // TOOD: add even test id
         },
       })
       .then((response) => {
@@ -46,6 +61,9 @@ const UserMedia = () => {
 
   return (
     <div>
+      <div>
+        {timerState ? "True": "False"}
+      </div>
       <div>
         <Video setImage={setUserVideo} />
       </div>
