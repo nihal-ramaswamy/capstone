@@ -2,6 +2,8 @@ import argparse
 import pyrebase
 import config
 import json
+import pickle
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-u", "--userID", type=str,
@@ -18,11 +20,16 @@ logID = args.logID
 
 firebase = pyrebase.initialize_app(config.firebaseConfig)
 storage = firebase.database()
+MODEL = "./model"
 
 
 def selectValuesFromUsersWhereUserID(userID: str) -> json:
     val = (storage.child("users").child(userID).get()).val()
-    return "hello"
+    return val
+
+
+def validate(dbValue) -> int:
+    model = pickle.load(model)
 
 
 if __name__ == "__main__":

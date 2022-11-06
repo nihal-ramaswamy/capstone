@@ -17,10 +17,13 @@ const UserMedia = () => {
   const intervalId = useRef<NodeJS.Timer>();
 
   useEffect(() => {
-    intervalId.current = setInterval(() => dispatch(setTimerState(!timerState)), 5000);
+    intervalId.current = setInterval(
+      () => dispatch(setTimerState(!timerState)),
+      5000
+    );
     return () => {
       clearInterval(intervalId.current);
-    }
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
@@ -52,28 +55,24 @@ const UserMedia = () => {
       dispatch(setTimerState(false));
 
       axios
-      .get("/api/validate", {
-        params: {
-          email: "email",
-          userId: "BBBB", // TODO: replace this with actual email and user id
-          id: logID, // TOOD: add even test id
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-      });
+        .get("/api/validate", {
+          params: {
+            email: "email",
+            userId: "AAAA", // TODO: replace this with actual email and user id
+            id: logID, // TOOD: add even test id
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+        });
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAudio, userVideo]);
 
   return (
     <div>
-      <div>
-        Timer: {timerState ? "True": "False"}
-      </div>
-      <div>
-        Media: {mediaState ? "True" : "False"}
-      </div>
+      <div>Timer: {timerState ? "True" : "False"}</div>
+      <div>Media: {mediaState ? "True" : "False"}</div>
       <div>
         <Video setImage={setUserVideo} />
       </div>
