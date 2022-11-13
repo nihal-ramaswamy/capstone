@@ -1,17 +1,21 @@
-import wave
 import numpy as np
-from math import log10 
-from scipy.io import wavfile
 import webrtcvad
 import base64
+import librosa 
 
 def audio_analysis(audioString):
-    sampleRate = 16000
+
     wavFile = open("audioFile.wav", "wb")
     decodeString = base64.b64decode(audioString)
     wavFile.write(decodeString)
-    audioWave = wave.open("audioFile.wav")
-    volume = []
+    wavFile.close()
+
+    #MFCC Features 
+    audioWave, sampleRate = librosa.load('audioFile.wav')
+    features = librosa.feature.mfcc(y=audioWave, sr=sampleRate, n_mfcc=40)
+    features = np.mean(features.T,axis=0) 
+
+    #Speech Detection
     counter=0
     totalCount=0
     audioFrames = audioWave.readframes(800)#arg here divides the audio file into atmost arg number of frames
@@ -21,13 +25,7 @@ def audio_analysis(audioString):
 
         finalFrame = audioFrame.to_bytes(2,"big")* int(sampleRate * frameDuration / 1000) #multiplying by sample rate and frame duration because the vad requires a particular data format
         totalCount=totalCount+1
-        d = np.frombuffer(finalFrame, np.int16).astype(np.float)
-        rms=np.sqrt((d*d).sum()/len(d))
-        try:
-            db = 20 * log10(rms)
-        except:
-            db=0
-        volume.append(db)
+
         if(vad.is_speech(finalFrame, sampleRate)):
             counter=counter+1
           
@@ -35,6 +33,6 @@ def audio_analysis(audioString):
         volume = volume[:6400]
         
     if((counter/totalCount)>=0.5):
-        return volume, True
-    return volume , False
+        return features, True
+    return features , False
 
