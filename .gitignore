@@ -45,5 +45,6 @@ __pycache__
 *.dat
 *.pkl
 .env*
+!.env.sample
 .vscode
 pyrightconfig.json
