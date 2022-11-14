@@ -2,7 +2,7 @@ import numpy as np
 import base64
 import torch
 import librosa 
-
+import json
 
 torch.set_num_threads(1)
 
@@ -12,7 +12,6 @@ def audio_analysis(audioString):
     wavFile = open("audioFile.wav", "wb")
     decodeString = base64.b64decode(audioString[20:])
     wavFile.write(decodeString)
-    wavFile.close()
     #MFCC Features 
     audioWave, sampleRate = librosa.load("audioFile.wav")
     features = librosa.feature.mfcc(y=audioWave, sr=sampleRate, n_mfcc=40)
@@ -37,4 +36,9 @@ def audio_analysis(audioString):
         return features, True
     else:
         return features, False
+
+
+# f = open('C:/Users/anish/Downloads/capstone-4d7fd-default-rtdb-AAAA-export.json')
+# data = json.load(f)['voice']
+# audio_analysis(data)
 
