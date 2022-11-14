@@ -40,7 +40,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     console.log(email, id, logID);
     responseFromPython += data.toString();
     responseStatus = 201;
-    console.log(responseFromPython, responseStatus)
+    console.log("output:", responseFromPython, responseStatus)
   });
 
   subProcess.stderr.on("error", (err: any) => {
