@@ -29,11 +29,11 @@ firebase = pyrebase.initialize_app(config.firebaseConfig)
 storage = firebase.database()
 MODEL = "./model"
 
-def generate_data(img, audio,time):
+def generate_data(img, audioString,time):
     """
     Generate data for the model
     """
-    audioResult = audio_proctor.audio_analysis(audio)
+    audioResult = audio_proctor.audio_analysis(audioString)
     mfccFeatures = audioResult[0]
     speech = audioResult[1]
     imgResult = yaw_angle.main(img)
@@ -106,9 +106,9 @@ def selectValuesFromUsersWhereUserID(userID: str) -> json:
     # image_output.write(img.decode('base64'))   # Write decoded image to buffer
     # img = image_output.seek(0) 
     
-    audio = val['voice']
+    audioString = val['voice']
     time = val['timestamp']
-    modelData = generate_data(img,audio,time)
+    modelData = generate_data(img,audioString,time)
     return modelData
 
 
