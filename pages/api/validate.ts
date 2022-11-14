@@ -22,7 +22,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   console.log(email, id, logID);
 
   const subProcess = spawn(`python3`, [
-    `${process.cwd()}/scripts/cheater.py`,
+    `${process.cwd()}/scripts/gen_points.py`,
     "--email",
     email,
     "--userID",
@@ -40,6 +40,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     console.log(email, id, logID);
     responseFromPython += data.toString();
     responseStatus = 201;
+    console.log(responseFromPython, responseStatus)
   });
 
   subProcess.stderr.on("error", (err: any) => {

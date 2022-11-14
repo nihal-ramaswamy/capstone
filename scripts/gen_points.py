@@ -7,6 +7,9 @@ import pyrebase
 import config
 import json
 import pickle
+import io, base64
+from PIL import Image
+import cStringIO
 
 
 parser = argparse.ArgumentParser()
@@ -94,6 +97,15 @@ def selectValuesFromUsersWhereUserID(userID: str) -> json:
     val = (storage.child("users").child(userID).get()).val()
     print(val)
     img = val['snapshot']
+    
+
+# Assuming base64_str is the string value without 'data:image/jpeg;base64,'
+    # img = Image.open(io.BytesIO(base64.decodebytes(bytes(base64_str, "utf-8"))))
+    # img.save('my-image.jpeg')
+    image_output = cStringIO.StringIO()
+    image_output.write(img.decode('base64'))   # Write decoded image to buffer
+    img = image_output.seek(0) 
+    
     audio = val['voice']
     time = val['timestamp']
     modelData = generate_data(img,audio,time)
@@ -106,5 +118,9 @@ def validate(dbValue) -> int:
     return score
 
 if __name__ == "__main__":
+    features = selectValuesFromUsersWhereUserID(userID)
     print(selectValuesFromUsersWhereUserID(userID))
+    res = validate(features)
+    print(res)
+
 
