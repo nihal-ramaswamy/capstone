@@ -1,8 +1,11 @@
 import argparse
-import pyrebase
-import config
-import json
-import pickle
+
+import dotenv
+
+from scripts.db import firebase_db
+from scripts.db import redis_db
+
+ENV_FILE = "../.env"
 
 
 parser = argparse.ArgumentParser()
@@ -18,19 +21,11 @@ userID = args.userID
 email = args.email
 logID = args.logID
 
-firebase = pyrebase.initialize_app(config.firebaseConfig)
-storage = firebase.database()
-MODEL = "./model"
+config = dotenv.dotenv_values(ENV_FILE)
 
-
-def selectValuesFromUsersWhereUserID(userID: str) -> json:
-    val = (storage.child("users").child(userID).get()).val()
-    return val
-
-
-def validate(dbValue) -> int:
-    model = pickle.load(model)
+firebase = firebase_db.Firebase(config)
+redis = redis_db.Redis(config)
 
 
 if __name__ == "__main__":
-    print(selectValuesFromUsersWhereUserID(userID))
+    print(firebase.selectValuesFromUsersWhereUserID(userID))
