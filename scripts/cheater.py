@@ -2,11 +2,10 @@ import argparse
 
 import dotenv
 
-from scripts.db import firebase_db
-from scripts.db import redis_db
+from scripts.pipeline import pipeline
 
 ENV_FILE = "../.env"
-
+MODEL_PATH = "MODEL_PATH"
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-u", "--userID", type=str,
@@ -23,9 +22,10 @@ logID = args.logID
 
 config = dotenv.dotenv_values(ENV_FILE)
 
-firebase = firebase_db.Firebase(config)
-redis = redis_db.Redis(config)
+
+def get_score(userId, model, config=config):
+    return pipeline.Pipeline(model, config).get_score(userId)
 
 
 if __name__ == "__main__":
-    print(firebase.selectValuesFromUsersWhereUserID(userID))
+    print(get_score(userID, MODEL_PATH))
