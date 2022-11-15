@@ -1,7 +1,7 @@
-from scripts.audio import proctor
-from scripts.faceRecognition import faceRecognition
+from audio import proctor
+from faceRecognition import faceRecognition
 from preProcess import preprocess
-from scripts.yaw import yaw_angle
+from yaw import yaw_angle
 
 
 def generate_data(img, audioString, time):

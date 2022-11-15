@@ -1,11 +1,11 @@
 import argparse
 
-import dotenv
+# import dotenv
 
-from scripts.pipeline import pipeline
+from pipeline import pipeline
 
 ENV_FILE = "../.env"
-MODEL_PATH = "MODEL_PATH"
+MODEL_PATH = "./randomForestFinalModel.pkl"
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-u", "--userID", type=str,
