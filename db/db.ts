@@ -1,6 +1,6 @@
 import generateKey from "../utils/generateKeys.utils";
-import { getDatabase, ref, set } from "firebase/database";
-import { app } from "./firebase";
+import { ref, set } from "firebase/database";
+import { db } from "./firebase";
 
 const reader = (file: Blob) => {
   return new Promise((resolve, reject) => {
@@ -17,7 +17,6 @@ export const writeUserData = async (
   image: string,
   audio: string
 ) => {
-  const db = getDatabase(app);
   const response = await fetch(audio);
   const audioBlob = await response.blob();
   const unixTime = Date.now();
