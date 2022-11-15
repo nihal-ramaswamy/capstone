@@ -6,6 +6,7 @@ RUN apt-get install python3-pip -y
 COPY package.json .
 RUN ["npm", "i"]
 RUN ["npm", "i", "-D"]
+COPY requirements.txt .
 RUN ["pip3", "install", "-r", "requirements.txt"]
 COPY . .
 RUN ["npm", "i"]

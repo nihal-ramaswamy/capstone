@@ -4,6 +4,7 @@ from cv2 import cv2
 
 def face_detect(img):
 
+    #To be pulled form db
     original = face_recognition.load_image_file(img)
     original = cv2.cvtColor(original, cv2.COLOR_BGR2RGB)
     cv2.waitKey(0)
