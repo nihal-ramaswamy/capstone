@@ -28,6 +28,5 @@ def generate_data(img, audioString, time):
     data.append(yaw)
     data.append(no_of_faces)
     # data.append(face_recognition_result[0])
-
     modelData = preprocess(data)
     return modelData

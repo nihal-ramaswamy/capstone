@@ -12,15 +12,16 @@ class Pipeline:
         self._model = model
 
     def _predict(self, features):
-        return self._model.predict(features)
+        score = self._model.predict(features)
+        print(score)
+        return score
 
     def get_score(self, userId):
         dbData = self._firebase.selectValuesFromUsersWhereUserID(userId)
-        print(len(dbData['snapshot']))
         img = base64ToImage("".join(dbData['snapshot']))
         audio = "".join(dbData['voice'])
         timeStamp = dbData['timestamp']
 
         features = generate_data(img, audio, timeStamp)
-
+        print(features)
         return self._predict(features)

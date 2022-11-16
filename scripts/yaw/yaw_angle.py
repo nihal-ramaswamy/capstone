@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import dlib
 from imutils import face_utils
+from numpy import asarray
 
 
 FACE_3D_MATRIX = [
@@ -80,8 +81,9 @@ def face_orientation(frame, landmarks):
 
 def getYawAngle(image):
     detector = dlib.get_frontal_face_detector()
-    predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    predictor = dlib.shape_predictor("scripts/yaw/shape_predictor_68_face_landmarks.dat")
+    npimage = asarray(image)
+    gray = cv2.cvtColor(npimage, cv2.COLOR_BGR2GRAY)
 
     # detect faces in the grayscale image
     rects = detector(gray, 1)
