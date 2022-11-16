@@ -8,6 +8,7 @@ RUN apt-get install libsndfile1-dev -y
 COPY package.json .
 RUN ["npm", "i"]
 RUN ["npm", "i", "-D"]
+RUN [ "pip3",  "install", "--default-timeout=100", "future" ]
 COPY requirements.txt .
 RUN ["pip3", "install", "-r", "requirements.txt"]
 COPY . .

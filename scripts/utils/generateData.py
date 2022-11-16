@@ -1,6 +1,6 @@
 from audio import proctor
-from faceRecognition import faceRecognition
-from preProcess import preprocess
+# from faceRecognition import faceRecognition
+from utils.preProcess import preprocess
 from yaw import yaw_angle
 
 
@@ -17,7 +17,7 @@ def generate_data(img, audioString, time):
     pitch = imgResult[1]
     yaw = imgResult[2]
     no_of_faces = imgResult[3]
-    face_recognition_result = faceRecognition.face_detect(img)
+    # face_recognition_result = faceRecognition.face_detect(img)
     data = []
 
     data.append(time)
@@ -27,7 +27,7 @@ def generate_data(img, audioString, time):
     data.append(pitch)
     data.append(yaw)
     data.append(no_of_faces)
-    data.append(face_recognition_result[0])
+    # data.append(face_recognition_result[0])
 
     modelData = preprocess(data)
     return modelData
