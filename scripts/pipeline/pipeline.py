@@ -9,16 +9,16 @@ class Pipeline:
     def __init__(self, model, db_config):
         self._firebase = firebase_db.Firebase(db_config)
         # self._redis = redis_db.Redis(db_config)
-        self._model = pickle.load(model)
+        self._model = model
 
     def _predict(self, features):
         return self._model.predict(features)
 
     def get_score(self, userId):
         dbData = self._firebase.selectValuesFromUsersWhereUserID(userId)
-
-        img = base64ToImage(dbData['snapshot'])
-        audio = dbData['voice']
+        print(len(dbData['snapshot']))
+        img = base64ToImage("".join(dbData['snapshot']))
+        audio = "".join(dbData['voice'])
         timeStamp = dbData['timestamp']
 
         features = generate_data(img, audio, timeStamp)

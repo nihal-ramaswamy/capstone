@@ -1,11 +1,12 @@
 import argparse
 
-# import dotenv
-
+import dotenv
+import pickle
+import os 
 from pipeline import pipeline
 
 ENV_FILE = "../.env"
-MODEL_PATH = "./randomForestFinalModel.pkl"
+MODEL_PATH = "scripts/randomForestFinalModel.pkl"
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-u", "--userID", type=str,
@@ -28,4 +29,7 @@ def get_score(userId, model, config=config):
 
 
 if __name__ == "__main__":
-    print(get_score(userID, MODEL_PATH))
+    # print(os.listdir())
+    with open(MODEL_PATH, "rb") as f:
+        model = pickle.load(f)
+        print(get_score(userID, model))

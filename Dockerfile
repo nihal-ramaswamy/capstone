@@ -5,6 +5,7 @@ RUN apt-get install python3-venv -y
 RUN apt-get install python3-pip -y
 RUN apt-get install cmake g++ make -y
 RUN apt-get install libsndfile1-dev -y
+RUN apt-get install ffmpeg -y
 COPY package.json .
 RUN ["npm", "i"]
 RUN ["npm", "i", "-D"]
