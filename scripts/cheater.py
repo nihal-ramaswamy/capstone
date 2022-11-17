@@ -32,4 +32,4 @@ if __name__ == "__main__":
     # print(os.listdir())
     with open(MODEL_PATH, "rb") as f:
         model = pickle.load(f)
-        print(get_score(userID, model))
+        print("Model Score:", get_score(userID, model))

@@ -13,7 +13,6 @@ class Pipeline:
 
     def _predict(self, features):
         score = self._model.predict(features)
-        print(score)
         return score
 
     def get_score(self, userId):
@@ -23,5 +22,5 @@ class Pipeline:
         timeStamp = dbData['timestamp']
 
         features = generate_data(img, audio, timeStamp)
-        print(features)
+        print("Features:", features)
         return self._predict(features)

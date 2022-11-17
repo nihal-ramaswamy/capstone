@@ -9,7 +9,7 @@ decorator==5.1.1
 Deprecated==1.2.13
 dlib==19.24.0
 dlib-binary==19.21.99
-face-recognition-models==0.3.0
+face-recognition
 async-timeout==4.0.2
 autopep8==1.7.0
 Deprecated==1.2.13

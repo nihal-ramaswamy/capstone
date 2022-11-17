@@ -36,7 +36,7 @@ def preprocess(data):
         yaw = 0
 
     no_of_faces = data[6]
-    face_recognition_result = True
+    face_recognition_result = data[7]
 
     arr1 = np.array([face_recognition_result, speech, roll, pitch, yaw, no_of_faces])
     arr2 = np.concatenate((arr1,mfccFeatures), axis = None)
