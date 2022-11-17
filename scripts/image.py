@@ -1,16 +1,16 @@
-from io import StringIO
+import io
 import json
 import base64
+from PIL import Image
+
 
 with open("capstone-4d7fd-default-rtdb-AAAA-export.json", "r") as read_content:
-    temp = json.load(read_content)['snapshot']
-    base = temp.split(",")[1]
-    data = base64.b64encode(base.encode())
+    img_json = json.load(read_content)['snapshot']
+    base = img_json.split(",")[1]
+    img = Image.open(io.BytesIO(base64.decodebytes(bytes(base, "utf-8"))))
+    img.save('test-image.jpeg')
 
-    # img = Image.open(io.BytesIO(base64.decodebytes(bytes(base, "utf-8"))))
-    # img.save('my-image.jpeg')
-    image_output = StringIO()
-    image_output.write(data.decode('base64'))   # Write decoded image to buffer
-    image_output.seek(0)
-    image_output.read()
-    # image = Image.open(img)
+    audio_json = json.load(read_content)['voice']
+    wavFile = open("audioFile.wav", "wb")
+    decodeString = base64.b64decode(audio_json[20:])
+    wavFile.write(decodeString)
