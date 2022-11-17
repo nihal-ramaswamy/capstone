@@ -23,6 +23,7 @@ IDENTITY_3x3_MATRIX_SCALE_500 = [
 
 
 def face_orientation(frame, landmarks):
+    print(type(frame))
     size = frame.shape  # (height, width, color_channel)
 
     image_points = np.array([
@@ -51,17 +52,17 @@ def face_orientation(frame, landmarks):
     (nose_end_point2D, _) = cv2.projectPoints(np.array(
         [(0.0, 0.0, 1000.0)]), rotation_vector, translation_vector, camera_matrix, dist_coeffs)
 
-    for p in image_points:
-        cv2.circle(frame, (int(p[0]), int(p[1])), 3, (0, 0, 255), -1)
+    # for p in image_points:
+    #     cv2.circle(frame, (int(p[0]), int(p[1])), 3, (0, 0, 255), -1)
 
-    p1 = (int(image_points[0][0]), int(image_points[0][1]))
-    p2 = (int(nose_end_point2D[0][0][0]), int(nose_end_point2D[0][0][1]))
+    # p1 = (int(image_points[0][0]), int(image_points[0][1]))
+    # p2 = (int(nose_end_point2D[0][0][0]), int(nose_end_point2D[0][0][1]))
 
-    cv2.line(frame, p1, p2, (255, 0, 0), 2)
+    # cv2.line(frame, p1, p2, (255, 0, 0), 2)
 
     # Display image
-    cv2.imshow("Output", frame)
-    cv2.waitKey(0)
+    # cv2.imshow("Output", frame)
+    # cv2.waitKey(0)
 
     axis = np.array(IDENTITY_3x3_MATRIX_SCALE_500, dtype=np.float32)
 
@@ -99,6 +100,6 @@ def getYawAngle(image):
         shape = predictor(gray, rect)
         landmarks = face_utils.shape_to_np(shape)
         _, _, roll, pitch, yaw, _ = face_orientation(
-            image, landmarks)
+            npimage, landmarks)
 
     return [roll, pitch, yaw, no_of_faces]

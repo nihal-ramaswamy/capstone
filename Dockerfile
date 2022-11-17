@@ -14,11 +14,9 @@ COPY requirements1.txt .
 RUN ["pip3", "install", "-r", "requirements1.txt"]
 COPY requirements.txt .
 RUN ["pip3", "install", "-r", "requirements.txt"]
-COPY requirements2.txt .
-RUN ["pip3", "install", "-r", "requirements2.txt"]
 COPY . .
 EXPOSE 3000
-CMD ["python3", "./scripts/cheater.py","--email","email", "--userID", "AAAA", "--logID","4a451cc-c54a-5ac1-40ab-c361c845602"]
+CMD ["python3", "./scripts/cheater.py","--email","email", "--userID", "AAAA", "--logID","80b602-a1c0-6457-373-ba3e1c86d6e"]
 # CMD ["npm", "run", "dev"]
 
 
