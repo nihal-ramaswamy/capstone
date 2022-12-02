@@ -59,8 +59,8 @@ const UserMedia = () => {
       axios
         .get("/api/validate", {
           params: {
-            email: "email",
-            userId: "AAAA", // TODO: replace this with actual email and user id
+            email: userEmail,
+            userId: userId, // TODO: replace this with actual email and user id
             id: logID, // TOOD: add even test id
           },
         })

@@ -13,13 +13,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     return;
   }
 
-  // console.log(req);
-
   const email = req.query.email;
   const id = req.query.userId;
   const logID = req.query.id;
-
-  console.log(email, id, logID);
 
   const subProcess = spawn(`python3`, [
     `${process.cwd()}/scripts/gen_points.py`,
