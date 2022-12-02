@@ -2,7 +2,6 @@ import argparse
 
 import dotenv
 import pickle
-import os 
 from pipeline import pipeline
 
 ENV_FILE = "../.env"
@@ -25,11 +24,10 @@ config = dotenv.dotenv_values(ENV_FILE)
 
 
 def get_score(userId, model, config=config):
-    return pipeline.Pipeline(model, config).get_score(userId)
+    return pipeline.Pipeline(model, config, 12).get_score(userId)
 
 
 if __name__ == "__main__":
-    # print(os.listdir())
     with open(MODEL_PATH, "rb") as f:
         model = pickle.load(f)
         print("Model Score:", get_score(userID, model))

@@ -3,19 +3,22 @@ import { AppState } from "./store";
 import { HYDRATE } from "next-redux-wrapper";
 
 export interface UserState {
-    userName: string | null;
+  userEmail: string | null;
+  userId: string | null;
 };
 
 const initialState: UserState = {
-  userName: null,
+  userEmail: null,
+  userId: null
 };
 
 export const userNameSlice = createSlice({
-    name: "userName",
+    name: "userState",
     initialState,
     reducers: {
-        setUserName: (state, action) => {
-            state.userName = action.payload;
+        setUserState: (state, action) => {
+          state.userEmail = action.payload.userEmail;
+          state.userId = action.payload.userId;
         },
     },
     extraReducers: {
@@ -28,8 +31,9 @@ export const userNameSlice = createSlice({
     }
 });
 
-export const { setUserName } = userNameSlice.actions;
+export const { setUserState } = userNameSlice.actions;
 
-export const selectUserName = (state: AppState) => state.userName.userName;
+export const selectUserId = (state: AppState) => state.userState.userId;
+export const selectUserEmail = (state: AppState) => state.userState.userEmail;
 
 export default userNameSlice.reducer;

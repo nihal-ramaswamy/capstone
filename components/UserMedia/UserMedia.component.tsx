@@ -1,15 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
 import { selectMediaState, setMediaState } from "../../store/mediaSlice";
-import timer, { SelectTimerState, setTimerState } from "../../store/timer";
+import { SelectTimerState, setTimerState } from "../../store/timer";
 import { useEffect, useRef, useState } from "react";
 import Video from "../Video/Video.component";
 import Audio from "../Audio/Audio.component";
 import { writeUserData } from "../../db/db";
 import axios from "axios";
+import { selectUserEmail, selectUserId } from "../../store/user";
 
 const UserMedia = () => {
   const mediaState = useSelector(selectMediaState);
   const timerState = useSelector(SelectTimerState);
+  const userEmail = useSelector(selectUserEmail);
+  const userId = useSelector(selectUserId);
   const dispatch = useDispatch();
 
   const [userVideo, setUserVideo] = useState<string | null>(null);
@@ -36,13 +39,13 @@ const UserMedia = () => {
 
   useEffect(() => {
     (async () => {
-      if (userAudio == null || userVideo == null) {
+      if (userAudio == null || userVideo == null || userId == null || userEmail == null) {
         return;
       }
       const logID = await writeUserData(
         "AAAA",
-        "BBBB",
-        "email",
+        userId,
+        userEmail, 
         userVideo,
         userAudio
       );
