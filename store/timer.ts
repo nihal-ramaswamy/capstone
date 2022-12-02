@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AppState } from "./store";
 import { HYDRATE } from "next-redux-wrapper";
-import { stat } from "fs";
 
 export interface TimerState {
     timerState: boolean;

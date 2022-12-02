@@ -1,7 +1,14 @@
 import generateKey from "../utils/generateKeys.utils";
 import { ref, set } from "firebase/database";
-import { db } from "./firebase";
+import { db, auth } from "./firebase";
 import { chunkString } from "../utils/string.utils";
+import {
+  setPersistence,
+  browserSessionPersistence,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut
+} from "firebase/auth";
 
 const reader = (file: Blob) => {
   return new Promise((resolve, reject) => {
@@ -53,4 +60,52 @@ export const writeUserData = async (
     });
   });
   return logID;
+};
+
+
+const _signInWithEmailPassword = async (email: string, password: string) => {
+  try {
+    const res = await signInWithEmailAndPassword(auth, email, password);
+    return { status: "ok", data: res.user };
+  } catch (e) {
+    return { status: "error", error: e };
+  }
+};
+
+// Sets persistence while signing in
+export const signInWithEmailPassword = async (email: string, password: string) => {
+  try {
+    await setPersistence(auth, browserSessionPersistence);
+    return await _signInWithEmailPassword(email, password);
+  } catch (e) {
+    return { status: "error", error: e };
+  }
+}
+
+const _signUpWithEmailPassword = async (email: string, password: string) => {
+  try { 
+    const res = await createUserWithEmailAndPassword(auth, email, password);
+    return { status: "ok", data: res.user };
+  } catch (e) {
+    return { status: "error", error: e };
+  }
+}
+
+// Sign up with browser persistence
+export const signUpWithEmailPassword = async (email: string, password: string) => {
+  try { 
+    await setPersistence(auth, browserSessionPersistence);
+    return await _signUpWithEmailPassword(email, password);
+  } catch (e) {
+    return { status: "error", error: e };
+  }
+};
+
+export const signOutOfSession = async () => {
+  try {
+    const res = await signOut(auth);
+    return { status: "ok", data: res };
+  } catch (e) {
+    return { status: "error", error: e };
+  }
 };
