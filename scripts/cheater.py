@@ -31,3 +31,4 @@ if __name__ == "__main__":
     with open(MODEL_PATH, "rb") as f:
         model = pickle.load(f)
         # print("Model Score:", get_score(userID, model))
+        print(get_score(userID, model))
