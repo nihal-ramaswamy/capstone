@@ -43,7 +43,6 @@ const UserMedia = () => {
         return;
       }
       const logID = await writeUserData(
-        "AAAA",
         userId,
         userEmail, 
         userVideo,
