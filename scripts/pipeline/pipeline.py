@@ -3,7 +3,7 @@ import pickle
 
 from utils.base64ToImage import base64ToImage
 from utils.generateData import generate_data
-from utils.warningType import gen_warning
+from warningType.warningType import gen_warning
 
 
 class Pipeline:
@@ -14,10 +14,11 @@ class Pipeline:
         self._model = model
 
     def _predict(self, features):
-        if(features[0]==0 and features[2]==0 and features[3]==0 and features[4]==0):
+        if(features[0][0]==0 and features[0][2]==0 and features[0][3]==0 and features[0][4]==0):
             return 5
         score = self._model.predict(features)
-        warningType, _warningScore = gen_warning(score, _warningScore)
+        warningType, self._warningScore = gen_warning(score, self._warningScore)
+        # print(warningType, self._warningScore)
         return warningType
 
     def get_score(self, userId):
@@ -27,5 +28,5 @@ class Pipeline:
         timeStamp = dbData['timestamp']
 
         features = generate_data(img, audio, timeStamp)
-        print("Features:", features)
+        # print("Features:", features)
         return self._predict(features)

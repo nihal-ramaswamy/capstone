@@ -23,7 +23,7 @@ IDENTITY_3x3_MATRIX_SCALE_500 = [
 
 
 def face_orientation(frame, landmarks):
-    print(type(frame))
+    # print(type(frame))
     size = frame.shape  # (height, width, color_channel)
 
     image_points = np.array([
