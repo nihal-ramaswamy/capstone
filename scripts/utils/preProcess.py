@@ -34,6 +34,7 @@ def preprocess(data):
         yaw = yaw/180
     else:
         yaw = 0
+    
 
     no_of_faces = data[6]
     face_recognition_result = data[7]
