@@ -28,12 +28,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   ]);
 
   let responseFromPython = "";
-  let error: string = "";
-  let responseStatus = 201;
+  let error: string = "No stdout or stderr from python process.";
+  let responseStatus = 500;
 
   subProcess.stdout.on("data", (data: any) => {
-    console.log("HELLLOOOOO");
-    console.log(email, id, logID);
     responseFromPython += data.toString();
     responseStatus = 201;
     console.log("output:", responseFromPython, responseStatus)
