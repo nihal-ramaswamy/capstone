@@ -30,7 +30,6 @@ const numChunks = (sizeInBytes: number) => {
 
 export const writeUserData = async (
   userId: string,
-  name: string,
   email: string,
   image: string,
   audio: string
@@ -51,7 +50,6 @@ export const writeUserData = async (
 
 
     set(ref(db, "users/" + userId), {
-      username: name,
       email: email,
       snapshot: imageChunks,
       voice: audioChunks,
