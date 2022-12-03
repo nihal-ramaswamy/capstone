@@ -30,4 +30,4 @@ def get_score(userId, model, config=config):
 if __name__ == "__main__":
     with open(MODEL_PATH, "rb") as f:
         model = pickle.load(f)
-        print(get_score(userID, model))
+        print(get_score(userID, model)[0])

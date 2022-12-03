@@ -66,7 +66,7 @@ const UserMedia = (props: UserMediaProps) => {
           },
         })
         .then((response) => {
-          console.log(response.data);
+          console.log(parseInt(response.data["data"][0]));
         });
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
