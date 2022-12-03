@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { selectMediaState, setMediaState } from "../../store/mediaSlice";
+import { setMediaState } from "../../store/mediaSlice";
 import { SelectTimerState, setTimerState } from "../../store/timer";
 import { useEffect, useRef, useState } from "react";
 import Video from "../Video/Video.component";
@@ -13,7 +13,6 @@ interface UserMediaProps {
 }
 
 const UserMedia = (props: UserMediaProps) => {
-  const mediaState = useSelector(selectMediaState);
   const timerState = useSelector(SelectTimerState);
   const dispatch = useDispatch();
 
@@ -74,8 +73,6 @@ const UserMedia = (props: UserMediaProps) => {
 
   return (
     <div>
-      <div>Timer: {timerState ? "True" : "False"}</div>
-      <div>Media: {mediaState ? "True" : "False"}</div>
       <div>
         <Video setImage={setUserVideo} />
       </div>
