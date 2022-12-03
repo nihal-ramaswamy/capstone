@@ -68,6 +68,7 @@ const UserMedia = (props: UserMediaProps) => {
         })
         .then((response) => {
           const score = parseInt(response.data["data"][0]);
+          console.log({score});
           if (score === 5) {
             setWarningMessage("Score is 5."); 
           } else if (score === 1) {
@@ -78,6 +79,8 @@ const UserMedia = (props: UserMediaProps) => {
             if (temp <= 0) {
               setWarningMessage("Score went below 12.");
               setWarningScore(12);
+            } else {
+              setWarningScore(temp);
             }
           }
 
