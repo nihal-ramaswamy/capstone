@@ -53,7 +53,6 @@ const UserMedia = (props: UserMediaProps) => {
 
       setUserAudio(null);
       setUserVideo(null);
-      console.log(logID);
 
       dispatch(setMediaState(false));
       dispatch(setTimerState(false));

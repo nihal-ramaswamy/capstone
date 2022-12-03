@@ -33,11 +33,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   subProcess.stdout.on("data", (data: any) => {
     responseFromPython += data.toString();
     responseStatus = 201;
-    console.log("output:", responseFromPython, responseStatus)
   });
 
   subProcess.stderr.on("error", (err: any) => {
-    console.log(err);
     error = err;
     responseStatus = 500;
   });

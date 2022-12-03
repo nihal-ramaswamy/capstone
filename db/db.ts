@@ -19,7 +19,6 @@ const reader = (file: Blob) => {
 };
 
 const numChunks = (sizeInBytes: number) => {
-  console.log(sizeInBytes)
   const MiB = 1048576; // Size of one mib in bytes 
   if (sizeInBytes < MiB) {
     return 1;

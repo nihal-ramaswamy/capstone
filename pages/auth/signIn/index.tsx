@@ -10,7 +10,6 @@ const SignIn: NextPage = () => {
 
   const handleSubmit = async(e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    console.log(email, password);
     const res = await signInWithEmailPassword(email, password);
     if (res.status == "error") {
       console.log("Error: ", res.error); // TODO: Handle errors better

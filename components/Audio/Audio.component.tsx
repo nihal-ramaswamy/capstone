@@ -47,7 +47,6 @@ const Audio = (props: AudioProps) => {
   const mediaState = useSelector(selectMediaState);
 
   useEffect(() => {
-    console.log("Audio component media state", mediaState);
     if (!mediaState) {
       return;
     }
@@ -56,7 +55,6 @@ const Audio = (props: AudioProps) => {
   }, [mediaState]);
 
   useEffect(() => {
-    console.log(time);
     if (time.s < 5) {
       return;
     }

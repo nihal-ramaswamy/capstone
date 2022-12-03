@@ -13,7 +13,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
         async ({ params }) => {
             store.dispatch(setMediaState(false));
             store.dispatch(setTimerState(false));
-            console.log("State on server", store.getState());
             return {
                 props: {
                     authState: false,
@@ -36,8 +35,6 @@ const Quiz: NextPage = () => {
       Router.push("/auth/signIn");
       return;
     }
-
-    console.log(auth.currentUser?.uid, auth.currentUser?.email);
   }, [auth.currentUser]);
 
     return (
