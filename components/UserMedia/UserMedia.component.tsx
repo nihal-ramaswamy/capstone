@@ -61,8 +61,8 @@ const UserMedia = (props: UserMediaProps) => {
         .get("/api/validate", {
           params: {
             email: props.email,
-            userId: props.uid, // TODO: replace this with actual email and user id
-            id: logID, // TOOD: add even test id
+            userId: props.uid, 
+            id: logID, 
           },
         })
         .then((response) => {
@@ -79,8 +79,8 @@ const UserMedia = (props: UserMediaProps) => {
       <div>
         <Video setImage={setUserVideo} />
       </div>
-      <div>
-        <Audio setAudio={setUserAudio} />
+      <div className="border-2 border-black hidden">
+        <Audio  setAudio={setUserAudio} />
       </div>
     </div>
   );

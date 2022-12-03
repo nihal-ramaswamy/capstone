@@ -5,8 +5,8 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { selectMediaState, setMediaState } from "../../store/mediaSlice";
+import { useSelector } from "react-redux";
+import { selectMediaState } from "../../store/mediaSlice";
 
 interface VideoProps {
   setImage: Dispatch<SetStateAction<string | null>>;
@@ -16,7 +16,7 @@ const Video = (props: VideoProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const photoRef = useRef<HTMLCanvasElement>(null);
   const stripRef = useRef<HTMLDivElement>(null);
-  const [image, setImage] = useState<string | null>(null);
+  const [_, setImage] = useState<string | null>(null);
   const mediaState = useSelector(selectMediaState);
 
   useEffect(() => {
@@ -79,20 +79,15 @@ const Video = (props: VideoProps) => {
 
     const data = photo.toDataURL("image/jpeg");
     props.setImage(data);
+    console.log(data);
     setImage(data);
-
-    const link = document.createElement("a");
-    link.href = data;
-    link.setAttribute("download", "myWebcam");
-    link.innerHTML = `<img src='${data}' alt='thumbnail'/>`;
-    strip.insertBefore(link, strip.firstChild);
   };
 
   return (
     <div>
       <video onCanPlay={() => paintToCanvas()} ref={videoRef} />
-      <canvas ref={photoRef} />
-      <div>
+      <canvas className="hidden" ref={photoRef} />
+      <div className="hidden">
         <div ref={stripRef} />
       </div>
     </div>

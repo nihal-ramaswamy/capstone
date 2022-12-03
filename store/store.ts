@@ -2,13 +2,11 @@ import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import { mediaSlice } from "./mediaSlice";
 import { timerSlice } from "./timer";
 import { createWrapper } from "next-redux-wrapper";
-import { userNameSlice } from "./user";
 
 const makeStore = () => configureStore({
     reducer: {
         [mediaSlice.name]: mediaSlice.reducer,
         [timerSlice.name]: timerSlice.reducer,
-        [userNameSlice.name]: userNameSlice.reducer,
     },
     devTools: true,
 });
