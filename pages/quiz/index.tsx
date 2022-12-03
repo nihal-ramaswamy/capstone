@@ -3,13 +3,16 @@ import UserMedia from "../../components/UserMedia/UserMedia.component";
 import { wrapper} from "../../store/store"
 import { setMediaState } from "../../store/mediaSlice";
 import { setTimerState } from "../../store/timer";
+import { getAuth } from "firebase/auth";
+import React from "react";
+import Router from "next/router";
 
 
 export const getServerSideProps = wrapper.getServerSideProps(
     (store) =>
         async ({ params }) => {
-            await store.dispatch(setMediaState(false));
-            await store.dispatch(setTimerState(false));
+            store.dispatch(setMediaState(false));
+            store.dispatch(setTimerState(false));
             console.log("State on server", store.getState());
             return {
                 props: {
@@ -22,9 +25,24 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
 
 const Quiz: NextPage = () => {
+  const auth = getAuth();
+  
+  React.useEffect(() => {
+    if (auth.currentUser === null || auth.currentUser.uid === null || auth.currentUser.email === null) {
+      Router.push("/auth/signIn");
+      return;
+    }
+    if (auth.currentUser ===undefined || auth.currentUser.uid === undefined || auth.currentUser.email === undefined) {
+      Router.push("/auth/signIn");
+      return;
+    }
+
+    console.log(auth.currentUser?.uid, auth.currentUser?.email);
+  }, [auth.currentUser]);
+
     return (
         <div>
-            <UserMedia />
+            <UserMedia uid = {auth.currentUser?.uid} email = {auth.currentUser?.email}/>
         </div>
     )
 }

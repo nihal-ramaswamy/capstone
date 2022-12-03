@@ -6,13 +6,15 @@ import Video from "../Video/Video.component";
 import Audio from "../Audio/Audio.component";
 import { writeUserData } from "../../db/db";
 import axios from "axios";
-import { selectUserEmail, selectUserId } from "../../store/user";
 
-const UserMedia = () => {
+interface UserMediaProps {
+  uid: string | null | undefined;
+  email: string | null | undefined;
+}
+
+const UserMedia = (props: UserMediaProps) => {
   const mediaState = useSelector(selectMediaState);
   const timerState = useSelector(SelectTimerState);
-  const userEmail = useSelector(selectUserEmail);
-  const userId = useSelector(selectUserId);
   const dispatch = useDispatch();
 
   const [userVideo, setUserVideo] = useState<string | null>(null);
@@ -39,12 +41,12 @@ const UserMedia = () => {
 
   useEffect(() => {
     (async () => {
-      if (userAudio == null || userVideo == null || userId == null || userEmail == null) {
+      if (userAudio == null || userVideo == null || props.uid == null || props.email == null) {
         return;
       }
       const logID = await writeUserData(
-        userId,
-        userEmail, 
+        props.uid,
+        props.email, 
         userVideo,
         userAudio
       );
@@ -59,8 +61,8 @@ const UserMedia = () => {
       axios
         .get("/api/validate", {
           params: {
-            email: userEmail,
-            userId: userId, // TODO: replace this with actual email and user id
+            email: props.email,
+            userId: props.uid, // TODO: replace this with actual email and user id
             id: logID, // TOOD: add even test id
           },
         })

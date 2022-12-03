@@ -16,7 +16,6 @@ COPY requirements.txt .
 RUN ["pip3", "install", "-r", "requirements.txt"]
 COPY . .
 EXPOSE 3000
-# CMD ["python3", "./scripts/cheater.py","--email","ani@gmail.com", "--userID", "5C5560xhQqeHn0zeURBdSGmKZuz1", "--logID","00dade-4e53-bf72-5e4f-dc7b4030cb02"]
+# CMD ["python3", "./scripts/cheater.py","--email","anupama@gmail.com", "--userID", "hh0aM6SMWHhdMrX3ENO9IjxXX3l2", "--logID","2d31e-1fd5-b380-ed3-dab3587cece"]
 CMD ["npm", "run", "dev"]
-
 

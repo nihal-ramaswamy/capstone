@@ -4,10 +4,10 @@ import { db, auth } from "./firebase";
 import { chunkString } from "../utils/string.utils";
 import {
   setPersistence,
-  browserSessionPersistence,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  signOut
+  signOut,
+  browserLocalPersistence
 } from "firebase/auth";
 
 const reader = (file: Blob) => {
@@ -73,7 +73,7 @@ const _signInWithEmailPassword = async (email: string, password: string) => {
 // Sets persistence while signing in
 export const signInWithEmailPassword = async (email: string, password: string) => {
   try {
-    await setPersistence(auth, browserSessionPersistence);
+    await setPersistence(auth, browserLocalPersistence);
     return await _signInWithEmailPassword(email, password);
   } catch (e) {
     return { status: "error", error: e };
@@ -92,7 +92,7 @@ const _signUpWithEmailPassword = async (email: string, password: string) => {
 // Sign up with browser persistence
 export const signUpWithEmailPassword = async (email: string, password: string) => {
   try { 
-    await setPersistence(auth, browserSessionPersistence);
+    await setPersistence(auth, browserLocalPersistence);
     return await _signUpWithEmailPassword(email, password);
   } catch (e) {
     return { status: "error", error: e };

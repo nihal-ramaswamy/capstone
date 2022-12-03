@@ -1,15 +1,12 @@
 import { NextPage } from "next";
 import Link from "next/link";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { signInWithEmailPassword } from "../../../db/db";
-import { setUserState, UserState } from "../../../store/user";
 import Router from "next/router";
 
 const SignIn: NextPage = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const dispatch = useDispatch();
 
   const handleSubmit = async(e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
@@ -22,10 +19,6 @@ const SignIn: NextPage = () => {
         console.log("Error: result is undefined");
         return;
       }
-      dispatch(setUserState({
-        userId: res.data.uid,
-        userEmail: res.data.email
-      } as UserState));
       Router.push("/");
     }
   }

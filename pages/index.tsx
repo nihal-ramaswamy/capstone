@@ -1,20 +1,18 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
-import { useDispatch, useSelector } from 'react-redux';
 import { signOutOfSession } from '../db/db';
-import { selectUserId, setUserState, UserState } from '../store/user';
+import { getAuth } from 'firebase/auth';
+import React from "react";
 
 const Home: NextPage = () => {
-  const userName = useSelector(selectUserId);
-  const dispatch = useDispatch();
+  const auth = getAuth();
 
   const signOutHandler = async () => {
     await signOutOfSession();
-    dispatch(setUserState({userId: null, userEmail: null} as UserState));
   }
 
   const renderNavBarButtonsBasedOnAuth = () => {
-    if (userName === null) {
+    if (auth.currentUser === null || auth.currentUser.uid === null || auth.currentUser === undefined || auth.currentUser.uid === undefined) {
       return (
        <> 
           <li>
@@ -25,7 +23,7 @@ const Home: NextPage = () => {
           </li>
         </>
       );
-    } else if (userName !== null) {
+    } else {
       return (
         <>
           <li>
