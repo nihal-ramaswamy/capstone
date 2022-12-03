@@ -18,6 +18,8 @@ const UserMedia = (props: UserMediaProps) => {
 
   const [userVideo, setUserVideo] = useState<string | null>(null);
   const [userAudio, setUserAudio] = useState<string | null>(null);
+  const [warningScore, setWarningScore] = useState<number>(12);
+  const [warningMessage, setWarningMessage] = useState<string>("");
   const intervalId = useRef<NodeJS.Timer>();
 
   useEffect(() => {
@@ -65,11 +67,25 @@ const UserMedia = (props: UserMediaProps) => {
           },
         })
         .then((response) => {
-          console.log(parseInt(response.data["data"][0]));
+          const score = parseInt(response.data["data"][0]);
+          if (score === 5) {
+            setWarningMessage("Score is 5."); 
+          } else if (score === 1) {
+            setWarningMessage("");
+          } else {
+            let temp = warningScore;
+            temp -= score;
+            if (temp <= 0) {
+              setWarningMessage("Score went below 12.");
+              setWarningScore(12);
+            }
+          }
+
         });
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAudio, userVideo]);
+
 
   return (
     <div>
@@ -79,6 +95,7 @@ const UserMedia = (props: UserMediaProps) => {
       <div className="border-2 border-black hidden">
         <Audio  setAudio={setUserAudio} />
       </div>
+      <div className="text-red-500">{warningMessage} {warningScore}</div>
     </div>
   );
 };
