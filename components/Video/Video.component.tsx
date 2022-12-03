@@ -3,7 +3,6 @@ import React, {
   SetStateAction,
   useEffect,
   useRef,
-  useState,
 } from "react";
 import { useSelector } from "react-redux";
 import { selectMediaState } from "../../store/mediaSlice";
@@ -16,7 +15,6 @@ const Video = (props: VideoProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const photoRef = useRef<HTMLCanvasElement>(null);
   const stripRef = useRef<HTMLDivElement>(null);
-  const [_, setImage] = useState<string | null>(null);
   const mediaState = useSelector(selectMediaState);
 
   useEffect(() => {
@@ -79,8 +77,6 @@ const Video = (props: VideoProps) => {
 
     const data = photo.toDataURL("image/jpeg");
     props.setImage(data);
-    console.log(data);
-    setImage(data);
   };
 
   return (
