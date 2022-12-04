@@ -17,7 +17,7 @@ class Pipeline:
     def _predict(self, features):
         score = 9
         if(np.isnan(features[0][2]) and np.isnan(features[0][3])  and np.isnan(features[0][4]) ):
-            return np.array(["5"])
+            return np.array([5])
         score = self._model.predict(features)
         # warningType, self._warningScore = gen_warning(score, self._warningScore)
         # print(warningType, self._warningScore)
