@@ -1,6 +1,6 @@
 import generateKey from "../utils/generateKeys.utils";
 import { ref, set } from "firebase/database";
-import { db, auth } from "./firebase";
+import { db, auth, firestore } from "./firebase";
 import { chunkString } from "../utils/string.utils";
 import {
   setPersistence,
@@ -9,7 +9,6 @@ import {
   signOut,
   browserLocalPersistence
 } from "firebase/auth";
-
 const reader = (file: Blob) => {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
@@ -105,4 +104,53 @@ export const signOutOfSession = async () => {
   } catch (e) {
     return { status: "error", error: e };
   }
+};
+
+export const submitForm = async (submission, formId, time1,time2,hard) => {
+  let docs: any = await firestore.collection("forms").get();
+  let doc = docs.docs.find((doc) => doc.id === formId);
+  let formData = { ...doc.data(), id: doc.id };
+  formData = formData["fields"];
+  let marksTotal = 0
+  let marksObtained = 0;
+  let submissions : any = await firestore.collection("submissions").where('formId','==', formId).get();
+  submissions = submissions.docs.map((doc) => doc.data());
+
+  submissions = submissions.filter((doc) => doc['submission'][0].value === submission[0].value);
+  if(submissions.length > 0){
+    alert("You have already submitted this quiz");
+    return;
+  }
+
+  console.log(submissions);
+
+  for (let i = 1; i < formData.length; ++i) {
+    if (formData[i]["required"] !== true) {
+      formData[i]["required"] = false;
+    }
+    if (formData[i]["marks"] == null) {
+      formData[i]["marks"] = "0";
+    }
+    submission[i]["required"] = formData[i]["required"];
+    submission[i]["marks"] = formData[i]["marks"];
+    submission[i]["expectedAnswer"] = formData[i]["answer"] ? formData[i]["answer"] : "NA";
+
+    if (submission[i]["value"] == submission[i]["expectedAnswer"]) {
+      marksObtained += parseInt(submission[i]["marks"])
+    }
+    marksTotal += parseInt(submission[i]['marks'])
+  }
+  let diff : any 
+  for(let i = 0; i < time1.length; i++) {
+    diff.push((time2[i]-time1[i])/1000)
+  }
+  console.log(hard);
+  firestore.collection("submissions").add({
+    submission,
+    formId,
+    marksObtained,
+    marksTotal,
+    diff,
+    hard
+  });
 };
