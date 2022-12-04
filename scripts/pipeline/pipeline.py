@@ -1,5 +1,6 @@
 from db import firebase_db, redis_db
 import pickle
+import numpy as np
 
 from utils.base64ToImage import base64ToImage
 from utils.generateData import generate_data
@@ -15,8 +16,8 @@ class Pipeline:
 
     def _predict(self, features):
         score = 9
-        if(features[0][2]==0 and features[0][4]==0 and features[0][3]==0):
-            return 5
+        if(np.isnan(features[0][2]) and np.isnan(features[0][3])  and np.isnan(features[0][4]) ):
+            return np.array(["5"])
         score = self._model.predict(features)
         # warningType, self._warningScore = gen_warning(score, self._warningScore)
         # print(warningType, self._warningScore)

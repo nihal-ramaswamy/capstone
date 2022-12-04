@@ -47,13 +47,8 @@ const Quiz: any = () => {
   console.log(model)
   const [loading, setLoading] = useState(false)
   const [err, setErr] = useState<any[]|undefined>()
-  const [time1, setTime1] = useState<number[]>([]);
-  const [time2, setTime2] = useState<number[]>([]);
-  const [diff,setDiff] = useState(0)
-  const [hard,setHard] = useState([])
   const [loadingtime,setLoad] = useState(false)
   const [index,setIndex] = useState(0)
-  const [status, setStatus] = useState([]);
   const [start, setStart] = useState(false);
   
   React.useEffect(() => {
@@ -68,29 +63,14 @@ const Quiz: any = () => {
   }, [auth.currentUser]);
   
 
-  const startTime =  () => {
-    setLoad(true)
-    setTime1([...time1,Date.now()]);
-    setLoad(false)
-    console.log(time1);
-}
-
 const endTime =   () => {
     setIndex(index + 1);
     setLoad(true)
-    setTime2([...time2,Date.now()]);
-    setTime1([...time1,Date.now()])
     setLoad(false)
-    console.log(time2);
 }
 
-const onstart = () => {
-    setStart(true);
-    setTime1([...time1,Date.now()])
-}
 
 const handleSubmit = async () => {
-    setTime2([...time2,Date.now()]);
     setIndex(index + 1);
     console.log("inside handle submit");
     if(loading) return
@@ -103,7 +83,7 @@ const handleSubmit = async () => {
     let submitableModel = createSubmitableModel(fillableModel)
     try{
         console.log("inside try block");
-        await submitForm(submitableModel, 0,time1,time2,hard)
+        await submitForm(submitableModel, 0)
         setLoading(false)
     }catch(e){
         console.log("inside catch block");
