@@ -44,6 +44,7 @@ const Quiz: any = () => {
     type : "short-text",
   }]
   const [fillableModel, setFillableModel] = useState(model)
+  console.log(model)
   const [loading, setLoading] = useState(false)
   const [err, setErr] = useState<any[]|undefined>()
   const [time1, setTime1] = useState<number[]>([]);
@@ -51,9 +52,10 @@ const Quiz: any = () => {
   const [diff,setDiff] = useState(0)
   const [hard,setHard] = useState([])
   const [loadingtime,setLoad] = useState(false)
-  const [index,setIndex] = useState(3)
+  const [index,setIndex] = useState(0)
   const [status, setStatus] = useState([]);
   const [start, setStart] = useState(false);
+  
   React.useEffect(() => {
     if (auth.currentUser === null || auth.currentUser.uid === null || auth.currentUser.email === null) {
       Router.push("/auth/signIn");
@@ -64,6 +66,7 @@ const Quiz: any = () => {
       return;
     }
   }, [auth.currentUser]);
+  
 
   const startTime =  () => {
     setLoad(true)
