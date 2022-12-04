@@ -41,8 +41,9 @@ const UserMedia = (props: UserMediaProps) => {
   }, [timerState]);
 
   useEffect(() => {
+    let active = true;
     (async () => {
-      if (userAudio == null || userVideo == null || props.uid == null || props.email == null) {
+      if ( active == false || userAudio == null || userVideo == null || props.uid == null || props.email == null) {
         return;
       }
       const logID = await writeUserData(
@@ -86,6 +87,9 @@ const UserMedia = (props: UserMediaProps) => {
 
         });
     })();
+    return () => {
+      active = false;
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAudio, userVideo]);
 

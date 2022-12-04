@@ -14,7 +14,8 @@ class Pipeline:
         self._model = model
 
     def _predict(self, features):
-        if(features[0][0]==0 and features[0][2]==0 and features[0][3]==0 and features[0][4]==0):
+        score = 9
+        if(features[0][2]==0 and features[0][4]==0 and features[0][3]==0):
             return 5
         score = self._model.predict(features)
         # warningType, self._warningScore = gen_warning(score, self._warningScore)
