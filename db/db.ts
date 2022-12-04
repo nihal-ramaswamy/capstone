@@ -128,4 +128,3 @@ export const submitForm = async (submission, formId) => {
     submission,
     formId,
   });
-};

@@ -55,4 +55,3 @@ export const hasError = fields => {
         }
     }
     return false
-}
