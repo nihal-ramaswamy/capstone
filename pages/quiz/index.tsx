@@ -117,7 +117,7 @@ const handleSubmit = async () => {
          if(fillableModel[index]["type"] === "number"){
             console.log(fillableModel[index]["type"]);
             return (
-                
+                <div>
                 <div className="grey-container mb-1">
                   <div key={index} className="input">
                   <label>{fillableModel[index]["title"]}{fillableModel[index]["required"] && <span className="err">*</span>}</label>
@@ -129,9 +129,12 @@ const handleSubmit = async () => {
                       </div>
                       </div>
                 </div>
+                <UserMedia uid = {auth.currentUser?.uid} email = {auth.currentUser?.email}/>
+                </div>
             )
         } else if(fillableModel[index]["type"] === "number"){
             return (
+              <div>
                 <div className="grey-container mb-1">
                     <div key={index} className="input">
                     <label>{fillableModel[index]["title"]}{fillableModel[index]["required"] && <span className="err">*</span>}</label>
@@ -142,9 +145,12 @@ const handleSubmit = async () => {
                         </div>
                     </div>
                 </div>
+                <UserMedia uid = {auth.currentUser?.uid} email = {auth.currentUser?.email}/>
+                </div>
             )
         } else if(fillableModel[index]["type"] === "short-text"){
             return (
+            <div>
             <div className="grey-container mb-1">
                 <div key={index} className="input">
                 <label>{fillableModel[index]["title"]}${fillableModel[index]["required"] && <span className="err">*</span>}</label>
@@ -156,6 +162,8 @@ const handleSubmit = async () => {
                     </div>
                 </div>
             </div>
+            <UserMedia uid = {auth.currentUser?.uid} email = {auth.currentUser?.email}/>
+             </div>
             )
         }
          
