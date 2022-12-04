@@ -163,4 +163,99 @@ const handleSubmit = async () => {
     
 }
 
-export default Quiz;
+const endTime =   () => {
+    setIndex(index + 1);
+    setLoad(true)
+    setTime2([...time2,Date.now()]);
+    setTime1([...time1,Date.now()])
+    setLoad(false)
+    console.log(time2);
+}
+
+const onstart = () => {
+    setStart(true);
+    setTime1([...time1,Date.now()])
+}
+
+const handleSubmit = async () => {
+    setTime2([...time2,Date.now()]);
+    setIndex(index + 1);
+    console.log("inside handle submit");
+    if(loading) return
+    let error : any= hasError(fillableModel)
+    setErr(error)
+    console.log(error);
+    if(error) return setErr(error) 
+    setLoading(true)
+    console.log(fillableModel)
+    let submitableModel = createSubmitableModel(fillableModel)
+    try{
+        console.log("inside try block");
+        await submitForm(submitableModel, 0,time1,time2,hard)
+        setLoading(false)
+    }catch(e){
+        console.log("inside catch block");
+        setLoading(false)
+    }
+}
+
+  
+
+      while(index != fillableModel.length){
+         if(fillableModel[index]["type"] === "number"){
+            console.log(fillableModel[index]["type"]);
+            return (
+                <div>
+                <div className="grey-container mb-1">
+                  <div key={index} className="input">
+                  <label>{fillableModel[index]["title"]}{fillableModel[index]["required"] && <span className="err">*</span>}</label>
+                      <input name={fillableModel[index]["type"] === "number" ? "number" : "short"} type={fillableModel[index]["type"] === "number" ? "number" : "text"} onChange={e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)} />
+                      
+                      
+                      <div>
+                        {index+1==fillableModel.length?(<button className="btn" onClick={handleSubmit}>{ loadingtime ? <span className="spinner white"></span> : <span>Submit</span>}</button>):( <button className="btn" onClick={endTime}>{ loadingtime ? <span className="spinner white"></span> : <span>Next</span>}</button>)}
+                      </div>
+                      </div>
+                </div>
+                <UserMedia uid = {auth.currentUser?.uid} email = {auth.currentUser?.email}/>
+                </div>
+            )
+        } else if(fillableModel[index]["type"] === "number"){
+            return (
+              <div>
+                <div className="grey-container mb-1">
+                    <div key={index} className="input">
+                    <label>{fillableModel[index]["title"]}{fillableModel[index]["required"] && <span className="err">*</span>}</label>
+                        <input name={fillableModel[index]["type"] === "number" ? "number" : "short"} type={fillableModel[index]["type"] === "number" ? "number" : "text"} onChange={e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)} />
+                        
+                        <div>
+                        {index+1==fillableModel.length?(<button className="btn" onClick={handleSubmit}>{ loadingtime ? <span className="spinner white"></span> : <span>Submit</span>}</button>):( <button className="btn" onClick={endTime}>{ loadingtime ? <span className="spinner white"></span> : <span>Next</span>}</button>)}
+                        </div>
+                    </div>
+                </div>
+                <UserMedia uid = {auth.currentUser?.uid} email = {auth.currentUser?.email}/>
+                </div>
+            )
+        } else if(fillableModel[index]["type"] === "short-text"){
+            return (
+            <div>
+            <div className="grey-container mb-1">
+                <div key={index} className="input">
+                <label>{fillableModel[index]["title"]}${fillableModel[index]["required"] && <span className="err">*</span>}</label>
+                    <input name={fillableModel[index]["type"] === "number" ? "number" : "short"} type={fillableModel[index]["type"] === "number" ? "number" : "text"} onChange={e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)} />
+                    
+                    
+                    <div>
+                    {index+1==fillableModel.length?(<button className="btn" onClick={handleSubmit}>{ loadingtime ? <span className="spinner white"></span> : <span>Submit</span>}</button>):( <button className="btn" onClick={endTime}>{ loadingtime ? <span className="spinner white"></span> : <span>Next</span>}</button>)}
+                    </div>
+                </div>
+            </div>
+            <UserMedia uid = {auth.currentUser?.uid} email = {auth.currentUser?.email}/>
+             </div>
+            )
+        }
+         
+    }
+    
+}
+
