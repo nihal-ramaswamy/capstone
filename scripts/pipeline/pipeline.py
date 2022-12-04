@@ -15,11 +15,11 @@ class Pipeline:
 
     def _predict(self, features):
         if(features[0][0]==0 and features[0][2]==0 and features[0][3]==0 and features[0][4]==0):
-            return 3
+            return 5
         score = self._model.predict(features)
         # warningType, self._warningScore = gen_warning(score, self._warningScore)
         # print(warningType, self._warningScore)
-        return score
+        return score 
 
     def get_score(self, userId):
         dbData = self._firebase.selectValuesFromUsersWhereUserID(userId)

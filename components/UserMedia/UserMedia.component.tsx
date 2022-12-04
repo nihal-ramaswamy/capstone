@@ -25,7 +25,7 @@ const UserMedia = (props: UserMediaProps) => {
   useEffect(() => {
     intervalId.current = setInterval(
       () => dispatch(setTimerState(!timerState)),
-      5000
+      15000
     );
     return () => {
       clearInterval(intervalId.current);
