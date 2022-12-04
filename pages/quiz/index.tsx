@@ -49,6 +49,7 @@ const Quiz: any = () => {
   const [err, setErr] = useState<any[]|undefined>()
   const [loadingtime,setLoad] = useState(false)
   const [index,setIndex] = useState(0)
+  const [status, setStatus] = useState([]);
   const [start, setStart] = useState(false);
   
   React.useEffect(() => {
@@ -62,6 +63,13 @@ const Quiz: any = () => {
     }
   }, [auth.currentUser]);
   
+
+  const startTime =  () => {
+    setLoad(true)
+    setTime1([...time1,Date.now()]);
+    setLoad(false)
+    console.log(time1);
+}
 
 const endTime =   () => {
     setIndex(index + 1);
