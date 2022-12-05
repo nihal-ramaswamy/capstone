@@ -1,6 +1,6 @@
 import generateKey from "../utils/generateKeys.utils";
 import { ref, set } from "firebase/database";
-import { db, auth } from "./firebase";
+import { db, auth, firestore } from "./firebase";
 import { chunkString } from "../utils/string.utils";
 import {
   setPersistence,
@@ -9,7 +9,7 @@ import {
   signOut,
   browserLocalPersistence
 } from "firebase/auth";
-
+import { submit } from "../utils";
 const reader = (file: Blob) => {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
@@ -105,4 +105,17 @@ export const signOutOfSession = async () => {
   } catch (e) {
     return { status: "error", error: e };
   }
+};
+
+export const submitForm = async (submission: submit[], formId: string) => {
+  try{
+  firestore.collection("submissions").add({
+    submission,
+    formId,
+  });
+  console.log("submitted");
+}catch(e){
+  console.log(e);
+}
+
 };

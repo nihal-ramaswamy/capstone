@@ -20,3 +20,59 @@ a {
   text-decoration: none;
 }
 
+.grey-container{
+  padding: 2em;
+  background-color: rgba(0, 0, 0, 0.05);
+  width: 700px;
+  height: 400px;
+  padding-top: 20%;
+  border: 1px solid rgb(6, 6, 6);
+  
+}
+
+.mb-1{
+  margin-bottom: 1em;
+}
+
+.btn{
+  border: none;
+  outline: none;
+  margin: 8px;
+  padding-top:20%;
+  padding: 1em 2em;
+  border-radius: 5px;
+  background-color: black;
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+  box-shadow: 0 3px 5px #cfcfcf;
+  display: flex;
+  letter-spacing: 1px;
+}
+
+.qbox{
+  padding-top: 200px;
+  width: 100;
+  height: 500px;
+  position: absolute;
+  top: 10%;
+  left: 30%;
+  margin: -50px 0 0 -50px;
+}
+
+.child {
+  display: inline-block;
+  height: 300px;
+  padding: 1rem 1rem;
+  vertical-align: middle;
+}
+
+.input{
+  width: 200px;
+  height: 50px;
+  /* Center vertically and horizontally */
+  position: absolute;
+  top: 60%;
+  left: 30%;
+  margin: -25px 0 0 -25px; /* Apply negative top and left margins to truly center the element */
+}
