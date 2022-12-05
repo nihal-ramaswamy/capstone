@@ -9,45 +9,13 @@ export const updateArrOfObjState = (setter, model, index, prop, val) => {
     setter(_model)
 }
 
-//toggles an item in array
-export const arrayToggle = (arr, item) => {
-    let idx = arr.indexOf(item)
-    if(idx > -1){
-        arr.splice(idx, 1)
-    }else{
-        arr.push(item)
-    }
-}
 
-export const validateEmail = email => {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-}
-
-export const getDateFromMillis = milliseconds => {
-    let date = new Date(milliseconds)
-    return date.toLocaleString()
-}
-
-export const expired = (createDateMillis, hours) => {
-    if(!hours) return false
-    let currentDateMillis = +(new Date())
-    let hoursMillis = parseInt(hours) * 60 * 60 * 1000
-    return (currentDateMillis - createDateMillis) < hoursMillis
-}
 
 export const createFillableModel = model => {
     const fillableModel: string[] = [];
     let fields = model.fields
     for(let field in fields){
         let fld = fields[field]
-        // let fieldModel = {
-        //     title: fld.title,
-        //     required: fld.required,
-        //     type: fld.type,
-        //     value: fld.type === "multioption-singleanswer" || fld.type === "multioption-multianswer" ? [] : ""
-        // }
-        // fillableModel.push(fieldModel)
         fillableModel.push({...fld, value: fld.type === "multioption-singleanswer" || fld.type === "multioption-multianswer" ? [] : ""})
     }
     return fillableModel
@@ -87,4 +55,3 @@ export const hasError = fields => {
         }
     }
     return false
-}

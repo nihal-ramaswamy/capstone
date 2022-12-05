@@ -29,4 +29,5 @@ def generate_data(img, audioString, time):
     data.append(no_of_faces)
     data.append(face_recognition_result[0])
     modelData = preprocess(data)
+    # print(mfccFeatures)
     return modelData

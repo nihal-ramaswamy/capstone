@@ -106,13 +106,11 @@ export const signOutOfSession = async () => {
   }
 };
 
-export const submitForm = async (submission, formId, time1,time2,hard) => {
+export const submitForm = async (submission, formId) => {
   let docs: any = await firestore.collection("forms").get();
   let doc = docs.docs.find((doc) => doc.id === formId);
   let formData = { ...doc.data(), id: doc.id };
   formData = formData["fields"];
-  let marksTotal = 0
-  let marksObtained = 0;
   let submissions : any = await firestore.collection("submissions").where('formId','==', formId).get();
   submissions = submissions.docs.map((doc) => doc.data());
 
@@ -124,33 +122,9 @@ export const submitForm = async (submission, formId, time1,time2,hard) => {
 
   console.log(submissions);
 
-  for (let i = 1; i < formData.length; ++i) {
-    if (formData[i]["required"] !== true) {
-      formData[i]["required"] = false;
-    }
-    if (formData[i]["marks"] == null) {
-      formData[i]["marks"] = "0";
-    }
-    submission[i]["required"] = formData[i]["required"];
-    submission[i]["marks"] = formData[i]["marks"];
-    submission[i]["expectedAnswer"] = formData[i]["answer"] ? formData[i]["answer"] : "NA";
-
-    if (submission[i]["value"] == submission[i]["expectedAnswer"]) {
-      marksObtained += parseInt(submission[i]["marks"])
-    }
-    marksTotal += parseInt(submission[i]['marks'])
-  }
-  let diff : any 
-  for(let i = 0; i < time1.length; i++) {
-    diff.push((time2[i]-time1[i])/1000)
-  }
-  console.log(hard);
+  
+  
   firestore.collection("submissions").add({
     submission,
     formId,
-    marksObtained,
-    marksTotal,
-    diff,
-    hard
   });
-};

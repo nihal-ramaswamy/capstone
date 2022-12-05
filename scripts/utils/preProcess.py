@@ -14,7 +14,7 @@ def preprocess(data):
             roll = data[3]
         roll = roll/180
     else:
-        roll = 0
+        roll = np.nan
 
     if data[4]!='NaN':
         if data[4] < 0:
@@ -24,7 +24,7 @@ def preprocess(data):
         pitch = 180 - pitch
         pitch = pitch/180
     else:
-        pitch = 0
+        pitch = np.nan
     
     if data[4]!='NaN':
         if  data[5] < 0:
@@ -33,7 +33,7 @@ def preprocess(data):
             yaw = data[5]
         yaw = yaw/180
     else:
-        yaw = 0
+        yaw = np.nan
     
 
     no_of_faces = data[6]
