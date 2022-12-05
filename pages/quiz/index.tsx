@@ -1,9 +1,8 @@
 import type { NextPage } from "next";
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import UserMedia from "../../components/UserMedia/UserMedia.component";
-import { createFillableModel, createSubmitableModel, updateArrOfObjState, hasError } from "../../utils"
+import { createSubmitableModel, updateArrOfObjState, hasError } from "../../utils"
 import { submitForm } from "../../db/db"
-import { auth } from "../../db/firebase"
 import { wrapper} from "../../store/store"
 import { setMediaState } from "../../store/mediaSlice";
 import { setTimerState } from "../../store/timer";
@@ -27,29 +26,31 @@ export const getServerSideProps = wrapper.getServerSideProps(
 );
 
 
-const Quiz: any = () => {
+const Quiz: NextPage = () => {
+
   const auth = getAuth();
+
   let model = [{
-    required : true,
-    title : "What is 12 times 2?",
-    type : "short-text",
-  },
-  {
-    required : true,
-    title : "What is 20 divided by 5?",
-    type : "short-text",
-  },{
-    required : true,
-    title : "What is 5 times 5?",
-    type : "short-text",
-  }]
-  const [fillableModel, setFillableModel] = useState(model)
-  console.log(model)
-  const [loading, setLoading] = useState(false)
-  const [err, setErr] = useState<any[]|undefined>()
-  const [loadingtime,setLoad] = useState(false)
-  const [index,setIndex] = useState(0)
-  const [start, setStart] = useState(false);
+      required : true,
+      title : "What is 12 times 2?",
+      type : "short-text",
+    },
+    {
+      required : true,
+      title : "What is 20 divided by 5?",
+      type : "short-text",
+    },{
+      required : true,
+      title : "What is 5 times 5?",
+      type : "short-text",
+  }];
+
+  const [fillableModel, setFillableModel] = useState(model);
+  console.log(model);
+  const [loading, setLoading] = useState(false);
+  const [_, setErr] = useState<any[]|undefined>();
+  const [loadingtime,setLoad] = useState(false);
+  const [index,setIndex] = useState(0);
   
   React.useEffect(() => {
     if (auth.currentUser === null || auth.currentUser.uid === null || auth.currentUser.email === null) {
@@ -65,177 +66,94 @@ const Quiz: any = () => {
 
 const endTime =   () => {
     setIndex(index + 1);
-    setLoad(true)
-    setLoad(false)
+    setLoad(true);
+    setLoad(false);
 }
 
 
 const handleSubmit = async () => {
     setIndex(index + 1);
-    console.log("inside handle submit");
-    if(loading) return
-    let error : any= hasError(fillableModel)
-    setErr(error)
-    console.log(error);
-    if(error) return setErr(error) 
-    setLoading(true)
-    console.log(fillableModel)
-    let submitableModel = createSubmitableModel(fillableModel)
+
+    if(loading) return;
+
+    let error:any= hasError(fillableModel)
+    setErr(error);
+
+    if(error) return setErr(error);
+    setLoading(true);
+
+    let submitableModel = createSubmitableModel(fillableModel);
+
     try{
         console.log("inside try block");
-        await submitForm(submitableModel, 0)
-        setLoading(false)
+        await submitForm(submitableModel, "0");
+        setLoading(false);
     }catch(e){
         console.log("inside catch block");
-        setLoading(false)
+        setLoading(false);
     }
 }
 
   
-
-      while(index != fillableModel.length){
-         if(fillableModel[index]["type"] === "number"){
-            console.log(fillableModel[index]["type"]);
-            return (
-                
-                <div className="grey-container mb-1">
-                  <div key={index} className="input">
-                  <label>{fillableModel[index]["title"]}{fillableModel[index]["required"] && <span className="err">*</span>}</label>
-                      <input name={fillableModel[index]["type"] === "number" ? "number" : "short"} type={fillableModel[index]["type"] === "number" ? "number" : "text"} onChange={e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)} />
-                      
-                      
-                      <div>
-                        {index+1==fillableModel.length?(<button className="btn" onClick={handleSubmit}>{ loadingtime ? <span className="spinner white"></span> : <span>Submit</span>}</button>):( <button className="btn" onClick={endTime}>{ loadingtime ? <span className="spinner white"></span> : <span>Next</span>}</button>)}
-                      </div>
-                      </div>
-                </div>
-            )
-        } else if(fillableModel[index]["type"] === "number"){
-            return (
-                <div className="grey-container mb-1">
-                    <div key={index} className="input">
-                    <label>{fillableModel[index]["title"]}{fillableModel[index]["required"] && <span className="err">*</span>}</label>
-                        <input name={fillableModel[index]["type"] === "number" ? "number" : "short"} type={fillableModel[index]["type"] === "number" ? "number" : "text"} onChange={e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)} />
-                        
-                        <div>
-                        {index+1==fillableModel.length?(<button className="btn" onClick={handleSubmit}>{ loadingtime ? <span className="spinner white"></span> : <span>Submit</span>}</button>):( <button className="btn" onClick={endTime}>{ loadingtime ? <span className="spinner white"></span> : <span>Next</span>}</button>)}
-                        </div>
-                    </div>
-                </div>
-            )
-        } else if(fillableModel[index]["type"] === "short-text"){
-            return (
-            <div className="grey-container mb-1">
-                <div key={index} className="input">
-                <label>{fillableModel[index]["title"]}${fillableModel[index]["required"] && <span className="err">*</span>}</label>
-                    <input name={fillableModel[index]["type"] === "number" ? "number" : "short"} type={fillableModel[index]["type"] === "number" ? "number" : "text"} onChange={e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)} />
-                    
-                    
-                    <div>
-                    {index+1==fillableModel.length?(<button className="btn" onClick={handleSubmit}>{ loadingtime ? <span className="spinner white"></span> : <span>Submit</span>}</button>):( <button className="btn" onClick={endTime}>{ loadingtime ? <span className="spinner white"></span> : <span>Next</span>}</button>)}
-                    </div>
-                </div>
-            </div>
-            )
-        }
-         
-    }
-    
-}
-
-const endTime =   () => {
-    setIndex(index + 1);
-    setLoad(true)
-    setTime2([...time2,Date.now()]);
-    setTime1([...time1,Date.now()])
-    setLoad(false)
-    console.log(time2);
-}
-
-const onstart = () => {
-    setStart(true);
-    setTime1([...time1,Date.now()])
-}
-
-const handleSubmit = async () => {
-    setTime2([...time2,Date.now()]);
-    setIndex(index + 1);
-    console.log("inside handle submit");
-    if(loading) return
-    let error : any= hasError(fillableModel)
-    setErr(error)
-    console.log(error);
-    if(error) return setErr(error) 
-    setLoading(true)
-    console.log(fillableModel)
-    let submitableModel = createSubmitableModel(fillableModel)
-    try{
-        console.log("inside try block");
-        await submitForm(submitableModel, 0,time1,time2,hard)
-        setLoading(false)
-    }catch(e){
-        console.log("inside catch block");
-        setLoading(false)
-    }
-}
-
-  
-
-      while(index != fillableModel.length){
-         if(fillableModel[index]["type"] === "number"){
-            console.log(fillableModel[index]["type"]);
-            return (
-                <div>
-                <div className="grey-container mb-1">
-                  <div key={index} className="input">
-                  <label>{fillableModel[index]["title"]}{fillableModel[index]["required"] && <span className="err">*</span>}</label>
-                      <input name={fillableModel[index]["type"] === "number" ? "number" : "short"} type={fillableModel[index]["type"] === "number" ? "number" : "text"} onChange={e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)} />
-                      
-                      
-                      <div>
-                        {index+1==fillableModel.length?(<button className="btn" onClick={handleSubmit}>{ loadingtime ? <span className="spinner white"></span> : <span>Submit</span>}</button>):( <button className="btn" onClick={endTime}>{ loadingtime ? <span className="spinner white"></span> : <span>Next</span>}</button>)}
-                      </div>
-                      </div>
-                </div>
-                <UserMedia uid = {auth.currentUser?.uid} email = {auth.currentUser?.email}/>
-                </div>
-            )
-        } else if(fillableModel[index]["type"] === "number"){
-            return (
-              <div>
-                <div className="grey-container mb-1">
-                    <div key={index} className="input">
-                    <label>{fillableModel[index]["title"]}{fillableModel[index]["required"] && <span className="err">*</span>}</label>
-                        <input name={fillableModel[index]["type"] === "number" ? "number" : "short"} type={fillableModel[index]["type"] === "number" ? "number" : "text"} onChange={e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)} />
-                        
-                        <div>
-                        {index+1==fillableModel.length?(<button className="btn" onClick={handleSubmit}>{ loadingtime ? <span className="spinner white"></span> : <span>Submit</span>}</button>):( <button className="btn" onClick={endTime}>{ loadingtime ? <span className="spinner white"></span> : <span>Next</span>}</button>)}
-                        </div>
-                    </div>
-                </div>
-                <UserMedia uid = {auth.currentUser?.uid} email = {auth.currentUser?.email}/>
-                </div>
-            )
-        } else if(fillableModel[index]["type"] === "short-text"){
-            return (
+  const render = () => {
+    while(index != fillableModel.length) {
+       if(fillableModel[index]["type"] === "number") {
+          console.log(fillableModel[index]["type"]);
+          return (
             <div>
-            <div className="grey-container mb-1">
+              <div className="grey-container mb-1">
                 <div key={index} className="input">
-                <label>{fillableModel[index]["title"]}{fillableModel[index]["required"] && <span className="err">*</span>}</label>
-                    <input name={fillableModel[index]["type"] === "number" ? "number" : "short"} type={fillableModel[index]["type"] === "number" ? "number" : "text"} onChange={e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)} />
-                    
-                    
-                    <div>
+                  <label>{fillableModel[index]["title"]}{fillableModel[index]["required"] && <span className="err">*</span>}</label>
+                  <input name={fillableModel[index]["type"] === "number" ? "number" : "short"} type={fillableModel[index]["type"] === "number" ? "number" : "text"} onChange={e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)} />
+                  <div>
                     {index+1==fillableModel.length?(<button className="btn" onClick={handleSubmit}>{ loadingtime ? <span className="spinner white"></span> : <span>Submit</span>}</button>):( <button className="btn" onClick={endTime}>{ loadingtime ? <span className="spinner white"></span> : <span>Next</span>}</button>)}
-                    </div>
+                  </div>
                 </div>
+              </div>
+              <UserMedia uid = {auth.currentUser?.uid} email = {auth.currentUser?.email}/>
             </div>
-            <UserMedia uid = {auth.currentUser?.uid} email = {auth.currentUser?.email}/>
-             </div>
-            )
-        }
-         
+          );
+      } else if(fillableModel[index]["type"] === "number") {
+          return (
+            <div>
+              <div className="grey-container mb-1">
+                  <div key={index} className="input">
+                    <label>{fillableModel[index]["title"]}{fillableModel[index]["required"] && <span className="err">*</span>}</label>
+                    <input name={fillableModel[index]["type"] === "number" ? "number" : "short"} type={fillableModel[index]["type"] === "number" ? "number" : "text"} onChange={e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)} />
+                    <div>
+                      {index+1==fillableModel.length?(<button className="btn" onClick={handleSubmit}>{ loadingtime ? <span className="spinner white"></span> : <span>Submit</span>}</button>):( <button className="btn" onClick={endTime}>{ loadingtime ? <span className="spinner white"></span> : <span>Next</span>}</button>)}
+                    </div>
+                  </div>
+              </div>
+              <UserMedia uid = {auth.currentUser?.uid} email = {auth.currentUser?.email}/>
+            </div>
+          )
+      } else if(fillableModel[index]["type"] === "short-text") {
+          return (
+            <div>
+              <div className="grey-container mb-1">
+                <div key={index} className="input">
+                  <label>{fillableModel[index]["title"]}{fillableModel[index]["required"] && <span className="err">*</span>}</label>
+                  <input name={fillableModel[index]["type"] === "number" ? "number" : "short"} type={fillableModel[index]["type"] === "number" ? "number" : "text"} onChange={e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)} />
+                  <div>
+                    {index+1==fillableModel.length?(<button className="btn" onClick={handleSubmit}>{ loadingtime ? <span className="spinner white"></span> : <span>Submit</span>}</button>):( <button className="btn" onClick={endTime}>{ loadingtime ? <span className="spinner white"></span> : <span>Next</span>}</button>)}
+                  </div>
+                </div>
+              </div>
+              <UserMedia uid = {auth.currentUser?.uid} email = {auth.currentUser?.email}/>
+            </div>
+          );
+      }
+      else {
+        return <></>;
+      }
     }
+  };
+
+  return (
+    <>{render()}</>
+  );
     
 }
 
+export default Quiz;

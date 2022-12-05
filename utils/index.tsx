@@ -21,7 +21,7 @@ export const createFillableModel = model => {
     return fillableModel
 }
 
-type submit = {
+export type submit = {
     title : string,
     value : string | number,
     type : string,

@@ -9,6 +9,7 @@ import {
   signOut,
   browserLocalPersistence
 } from "firebase/auth";
+import { submit } from "../utils";
 const reader = (file: Blob) => {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
@@ -106,8 +107,8 @@ export const signOutOfSession = async () => {
   }
 };
 
-export const submitForm = async (submission, formId) => {
-  let docs: any = await firestore.collection("forms").get();
+export const submitForm = async (submission: submit[], formId: string) => {
+  let docs = await firestore.collection("forms").get();
   let doc = docs.docs.find((doc) => doc.id === formId);
   let formData = { ...doc.data(), id: doc.id };
   formData = formData["fields"];
@@ -119,10 +120,6 @@ export const submitForm = async (submission, formId) => {
     alert("You have already submitted this quiz");
     return;
   }
-
-  console.log(submissions);
-
-  
   
   firestore.collection("submissions").add({
     submission,
