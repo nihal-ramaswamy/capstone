@@ -101,7 +101,7 @@ const handleSubmit = async () => {
        if(fillableModel[index]["type"] === "number") {
           console.log(fillableModel[index]["type"]);
           return (
-            <div>
+            <div className = "qbox">
               <div className="grey-container mb-1">
                 <div key={index} className="input">
                   <label>{fillableModel[index]["title"]}{fillableModel[index]["required"] && <span className="err">*</span>}</label>
@@ -116,7 +116,7 @@ const handleSubmit = async () => {
           );
       } else if(fillableModel[index]["type"] === "number") {
           return (
-            <div>
+            <div className = "qbox">
               <div className="grey-container mb-1">
                   <div key={index} className="input">
                     <label>{fillableModel[index]["title"]}{fillableModel[index]["required"] && <span className="err">*</span>}</label>
@@ -131,8 +131,8 @@ const handleSubmit = async () => {
           )
       } else if(fillableModel[index]["type"] === "short-text") {
           return (
-            <div>
-              <div className="grey-container mb-1">
+            <div className = "qbox">
+              <div className="grey-container mb-1 child">
                 <div key={index} className="input">
                   <label>{fillableModel[index]["title"]}{fillableModel[index]["required"] && <span className="err">*</span>}</label>
                   <input name={fillableModel[index]["type"] === "number" ? "number" : "short"} type={fillableModel[index]["type"] === "number" ? "number" : "text"} onChange={e => updateArrOfObjState(setFillableModel, fillableModel, index, "value", e.target.value)} />
@@ -141,7 +141,9 @@ const handleSubmit = async () => {
                   </div>
                 </div>
               </div>
+              <div className="child">
               <UserMedia uid = {auth.currentUser?.uid} email = {auth.currentUser?.email}/>
+              </div>
             </div>
           );
       }
