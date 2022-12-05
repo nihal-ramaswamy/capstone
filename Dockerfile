@@ -18,4 +18,5 @@ COPY . .
 EXPOSE 3000
 # CMD ["python3", "./scripts/cheater.py","--email","anupama@gmail.com", "--userID", "hh0aM6SMWHhdMrX3ENO9IjxXX3l2", "--logID","2d31e-1fd5-b380-ed3-dab3587cece"]
 CMD ["npm", "run", "dev"]
+# CMD ["node", "test.js"]
 

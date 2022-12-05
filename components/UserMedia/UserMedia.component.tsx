@@ -68,6 +68,8 @@ const UserMedia = (props: UserMediaProps) => {
         })
         .then((response) => {
           const score = parseInt(response.data["data"][0]);
+
+          console.log({response, score})
           if (score === 5) {
             setWarningMessage("Score is 5."); 
           } else if (score === 1) {
@@ -80,8 +82,9 @@ const UserMedia = (props: UserMediaProps) => {
               setWarningScore(12);
             }
           }
-
-        });
+        }).catch((err) => {
+          console.log({err});
+        })
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAudio, userVideo]);

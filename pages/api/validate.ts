@@ -1,4 +1,4 @@
-import { spawn } from "child_process";
+import { spawn, exec } from "child_process";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type Data = {
@@ -12,45 +12,20 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     return;
   }
 
-  const email = req.query.email;
   const id = req.query.userId;
-  const logID = req.query.id;
 
-  const subProcess = spawn(`python3`, [
-    `${process.cwd()}scripts/cheater.py`,
-    "--email",
-    email as string,
-    "--userID",
-    id as string,
-    "--logID",
-    logID as string,
-  ]);
+  console.log({id});
 
-  let responseFromPython = "";
-  let error: string = "No stdout or stderr from python process.";
-  let responseStatus = 500;
 
-  subProcess.stdout.on("data", (data: any) => {
-    responseFromPython += data.toString();
-    responseStatus = 201;
-  });
+  const command = `python3 ${process.cwd()}scripts/cheater.py --userID ${id as string}`;
 
-  subProcess.stderr.on("error", (err: any) => {
-    error = err;
-    responseStatus = 500;
-  });
+  exec(command, (err, stdout, stderr) => {
 
-  subProcess.on("close", () => {
-    if (responseStatus != 201) {
-      res.status(responseStatus).json({
-        error: error,
+    console.log({err, stdout, stderr});
+      res.status(201).json({
+        data: stdout
       });
-    } else {
-      res.status(responseStatus).json({
-        data: responseFromPython,
-      });
-    }
-  });
+  })
 };
 
 export default handler;
