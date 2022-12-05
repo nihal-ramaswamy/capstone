@@ -45,7 +45,7 @@ const UserMedia = (props: UserMediaProps) => {
       if (userAudio == null || userVideo == null || props.uid == null || props.email == null) {
         return;
       }
-      const logID = await writeUserData(
+      await writeUserData(
         props.uid,
         props.email, 
         userVideo,
@@ -61,15 +61,12 @@ const UserMedia = (props: UserMediaProps) => {
       axios
         .get("/api/validate", {
           params: {
-            email: props.email,
             userId: props.uid, 
-            id: logID, 
           },
         })
         .then((response) => {
           const score = parseInt(response.data["data"][0]);
 
-          console.log({response, score})
           if (score === 5) {
             setWarningMessage("Score is 5."); 
           } else if (score === 1) {
