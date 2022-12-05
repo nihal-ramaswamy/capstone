@@ -6,6 +6,7 @@ import Video from "../Video/Video.component";
 import Audio from "../Audio/Audio.component";
 import { writeUserData } from "../../db/db";
 import axios from "axios";
+import Timer from "../../components/Timer/Timer.component";
 
 interface UserMediaProps {
   uid: string | null | undefined;
@@ -93,9 +94,26 @@ const UserMedia = (props: UserMediaProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAudio, userVideo]);
 
+  const renderNavBar = () => {
+      return (
+       <> 
+          <li>
+            <Timer time ={425} />
+          </li>
+
+        </>
+      );
+    }
+  
+  
 
   return (
     <div>
+      <div className="hidden w-full md:block md:w-auto" id="navbar-default">
+        <ul className="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+          {renderNavBar()}
+        </ul>
+      </div>      
       <div>
         <Video setImage={setUserVideo} />
       </div>
