@@ -66,17 +66,21 @@ const UserMedia = (props: UserMediaProps) => {
         })
         .then((response) => {
           const score = parseInt(response.data["data"][0]);
+          console.log("Score:",{score})
 
           if (score === 5) {
-            setWarningMessage("Score is 5."); 
+            setWarningMessage("Score is 5 -> Face not seen"); 
           } else if (score === 1) {
             setWarningMessage("");
           } else {
             let temp = warningScore;
             temp -= score;
             if (temp <= 0) {
-              setWarningMessage("Score went below 12.");
+              setWarningMessage("Score went below 12 -> Cheating detected")
               setWarningScore(12);
+            }
+            else{
+              setWarningScore(temp);
             }
           }
         }).catch((err) => {

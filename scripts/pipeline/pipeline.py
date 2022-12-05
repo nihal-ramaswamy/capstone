@@ -14,6 +14,7 @@ class Pipeline:
         self._model = model
 
     def _predict(self, features):
+        score = np.array([0])
         if(features[0][0]==0 and features[0][2]==0 and features[0][3]==0 and features[0][4]==0):
             return np.array([5])
         score = self._model.predict(features)
