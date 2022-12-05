@@ -13,7 +13,6 @@ class Firebase:
             "storageBucket": config["STORAGE_BUCKET"],
             "messagingSenderId": config["MESSAGING_SENDER_ID"],
             "appId": config["APP_ID"],
-            "measurementId": config["MEASUREMENT_ID"]
         }
         self._firebase = pyrebase.initialize_app(self._firebaseConfig)
         self._storage = self._firebase.database()

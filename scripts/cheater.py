@@ -1,8 +1,10 @@
 import argparse
-
 import dotenv
 import pickle
 from pipeline import pipeline
+import warnings
+
+warnings.filterwarnings("ignore")
 
 ENV_FILE = "../.env"
 MODEL_PATH = "scripts/randomForestFinalModel.pkl"

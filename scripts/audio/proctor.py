@@ -3,6 +3,7 @@ import base64
 import torch
 import librosa
 import os
+import json
 
 torch.set_num_threads(1)
 
@@ -38,6 +39,7 @@ def audio_analysis(audioString):
         return features, False
 
 
-# f = open('C:/Users/anish/Downloads/capstone-4d7fd-default-rtdb-AAAA-export.json')
-# data = json.load(f)['voice']
-# audio_analysis(data)
+# with open("./scripts/audio/capstone-d89f7-default-rtdb-hh0aM6SMWHhdMrX3ENO9IjxXX3l2-export.json", "r") as read_content:
+#     data = "".join(json.load(read_content)['voice'])
+#     output= audio_analysis(data)
+#     print(output)
