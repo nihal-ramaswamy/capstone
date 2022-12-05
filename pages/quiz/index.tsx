@@ -10,6 +10,7 @@ import { getAuth } from "firebase/auth";
 import React from "react";
 import Router from "next/router";
 import NavBar from "../../components/NavBar/NavBar.component";
+import screenfull from "screenfull";
 
 
 export const getServerSideProps = wrapper.getServerSideProps(
@@ -47,7 +48,6 @@ const Quiz: NextPage = () => {
   }];
 
   const [fillableModel, setFillableModel] = useState(model);
-  console.log(model);
   const [loading, setLoading] = useState(false);
   const [_, setErr] = useState<any[]|undefined>();
   const [loadingtime,setLoad] = useState(false);
@@ -63,6 +63,10 @@ const Quiz: NextPage = () => {
       return;
     }
   }, [auth.currentUser]);
+
+  React.useEffect(() => {
+    screenfull.request();
+  }, []);
   
 
 const endTime =   () => {
