@@ -9,6 +9,7 @@ import { setTimerState } from "../../store/timer";
 import { getAuth } from "firebase/auth";
 import React from "react";
 import Router from "next/router";
+import NavBar from "../../components/NavBar/NavBar.component";
 
 
 export const getServerSideProps = wrapper.getServerSideProps(
@@ -151,7 +152,10 @@ const handleSubmit = async () => {
   };
 
   return (
-    <>{render()}</>
+    <>
+      <NavBar />
+      {render()}
+    </>
   );
     
 }

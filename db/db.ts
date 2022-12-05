@@ -110,9 +110,17 @@ export const signOutOfSession = async () => {
 export const submitForm = async (submission: submit[], formId: string) => {
   let docs = await firestore.collection("forms").get();
   let doc = docs.docs.find((doc) => doc.id === formId);
+  
+  if (doc === undefined) {
+    return;
+  }
+
+
   let formData = { ...doc.data(), id: doc.id };
   formData = formData["fields"];
-  let submissions : any = await firestore.collection("submissions").where('formId','==', formId).get();
+
+
+  let submissions: any = await firestore.collection("submissions").where('formId','==', formId).get();
   submissions = submissions.docs.map((doc) => doc.data());
 
   submissions = submissions.filter((doc) => doc['submission'][0].value === submission[0].value);

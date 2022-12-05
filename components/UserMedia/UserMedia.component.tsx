@@ -44,7 +44,7 @@ const UserMedia = (props: UserMediaProps) => {
   useEffect(() => {
     let active = true;
     (async () => {
-      if ( active == false || userAudio == null || userVideo == null || props.uid == null || props.email == null) {
+      if (userAudio == null || userVideo == null || props.uid == null || props.email == null) {
         return;
       }
       const logID = await writeUserData(
@@ -69,23 +69,24 @@ const UserMedia = (props: UserMediaProps) => {
           },
         })
         .then((response) => {
-          const score = parseInt(response.data["data"][0]);
-          console.log({score});
-          if (score === 5) {
-            setWarningMessage("Score is 5."); 
-          } else if (score === 1) {
-            setWarningMessage("");
-          } else {
-            let temp = warningScore;
-            temp -= score;
-            if (temp <= 0) {
-              setWarningMessage("Score went below 12.");
-              setWarningScore(12);
+          if (active) {
+            const score = parseInt(response.data["data"][0]);
+            console.log({score});
+            if (score === 5) {
+              setWarningMessage("Score is 5."); 
+            } else if (score === 1) {
+              setWarningMessage("");
             } else {
-              setWarningScore(temp);
+              let temp = warningScore;
+              temp -= score;
+              if (temp <= 0) {
+                setWarningMessage("Score went below 12.");
+                setWarningScore(12);
+              } else {
+                setWarningScore(temp);
+              }
             }
           }
-
         });
     })();
     return () => {
@@ -94,26 +95,8 @@ const UserMedia = (props: UserMediaProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAudio, userVideo]);
 
-  const renderNavBar = () => {
-      return (
-       <> 
-          <li>
-            <Timer time ={425} />
-          </li>
-
-        </>
-      );
-    }
-  
-  
-
   return (
     <div>
-      <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-        <ul className="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-          {renderNavBar()}
-        </ul>
-      </div>      
       <div>
         <Video setImage={setUserVideo} />
       </div>
