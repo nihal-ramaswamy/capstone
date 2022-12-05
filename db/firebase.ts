@@ -16,13 +16,12 @@ const messagingSenderId = process.env.MESSAGING_SENDER_ID;
 const appId = process.env.APP_ID;
 
 const firebaseConfig = {
-  apiKey: apiKey,
-  authDomain: authDomain,
-  projectId: projectId,
-  databaseURL: databaseURL,
-  storageBucket: storageBucket,
-  messagingSenderId: messagingSenderId,
-  appId: appId
+  apiKey: "AIzaSyBq_HpVNhep9-CWodnb8SZ6sLkNsmJq4P4",
+  authDomain: "capstonefin-857d3.firebaseapp.com",
+  projectId: "capstonefin-857d3",
+  storageBucket: "capstonefin-857d3.appspot.com",
+  messagingSenderId: "604455072038",
+  appId: "1:604455072038:web:edfb02aadd1bd7990311e7"
 }
 firebase.initializeApp(firebaseConfig)
 

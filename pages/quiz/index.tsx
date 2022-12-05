@@ -91,6 +91,7 @@ const handleSubmit = async () => {
         setLoading(false);
     }catch(e){
         console.log("inside catch block");
+        console.log(e)
         setLoading(false);
     }
 }
